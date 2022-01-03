@@ -9,8 +9,12 @@
     <title>{% block title %}To-Do App{% endblock %}</title>
   </head>
   <body>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/pooper.min.js"></script>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
       <a class="navbar-brand" href="/">To-Do App</a>
+      <input type="checkbox" class="custom-control-input" id="darkSwitch">
+      <label class="custom-control-label" for="darkSwitch">Dark Switch</label>
     </nav>
 
     <div class="container body-content">
