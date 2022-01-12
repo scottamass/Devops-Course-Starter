@@ -1,7 +1,7 @@
 
 from flask import Flask ,render_template, sessions, request,redirect, url_for
 
-from todo_app.data.session_items import add_item, get_items
+from todo_app.data.session_items import add_item, get_items ,get_item
 
 
 from todo_app.flask_config import Config
@@ -25,3 +25,10 @@ def submit():
         return redirect(url_for('index'))
 #
 
+@app.route("/complete<id>", methods=['PUT'])
+def complete(id):
+    
+        get_item(id).status = "done"
+        
+        
+        return redirect(url_for('index'))

@@ -17,9 +17,16 @@
       <h2>Items</h2>
       <ul class="list-group mb-4">
        {% for item in items%}
-       <li>
-        {{item['title']}}-{{item['status']}}
-       </li>
+       <div class="card" style="min-width: 18rem; margin-bottom: 1rem;">
+                <div class="card-body">
+          <h5 class="card-title">{{item['title']}}</h5>
+        </div>
+        
+         {{item['status']}}
+        
+          <a href="complete/{{task.id}}"  method="POST" class="btn btn-primary">mark as complete</a>
+        </div>
+     
        
        {% endfor %}
       </ul>
