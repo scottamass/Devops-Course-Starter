@@ -16,20 +16,27 @@
     <div class="col-md-12">
       <h2>Items</h2>
       <ul class="list-group mb-4">
-       {% for item in items%}
-       <div class="card" style="min-width: 18rem; margin-bottom: 1rem;">
-                <div class="card-body">
-          <h5 class="card-title">{{item['title']}}</h5>
-        </div>
-        
-         {{item['status']}}
-         <form action="/complete/{{item.id}}" method="POST">
-          <button type="submit" class="btn btn-primary">mark as complete</button>
-         </form>
-        </div>
-     
-       
-       {% endfor %}
+          {% for item in items%}
+              <div class="card" style="min-width: 18rem; margin-bottom: 1rem;">
+                        <div class="card-body">
+                  <h5 class="card-title">{{item.title}}</h5>
+                </div>
+                    {% if "done" in item.status %}
+                      {% set box_colour = "success" %} 
+                    {% else %}  
+                      {% set box_colour = "danger" %}
+                    {% endif %}
+                    <div class="alert alert-{{box_colour}}" role="alert">
+                      {{item.status}}
+                    </div>
+                  
+                  <form action="/complete/{{item.id}}" method="POST">
+                    <button type="submit" class="btn btn-primary">mark as complete</button>
+                  </form>
+                </div>
+            
+              
+          {% endfor %}
       </ul>
     </div>
   </div>
