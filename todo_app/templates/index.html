@@ -23,8 +23,9 @@
         </div>
         
          {{item['status']}}
-        
-          <a action="/complete/{{item.id}}"  method="POST" class="btn btn-primary">mark as complete</a>
+         <form action="/complete/{{item.id}}" method="POST">
+          <button type="submit" class="btn btn-primary">mark as complete</button>
+         </form>
         </div>
      
        
