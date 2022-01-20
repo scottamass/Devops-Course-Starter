@@ -15,10 +15,10 @@ app.config.from_object(Config())
 @app.route('/')
 def index():
     
-    items = get_items()
-    sorted_items = sorted(items, key=attrgetter('status'))
+    
+    items = sorted(get_items(), key=lambda i: i['status'] ,reverse=True)
 
-    return render_template('index.html', items=sorted_items)
+    return render_template('index.html', items=items)
 
 @app.route('/submit', methods=['POST'] )
 def submit():
