@@ -3,6 +3,8 @@ from flask import Flask ,render_template, sessions, request,redirect, url_for
 
 from todo_app.data.session_items import add_item, get_items ,get_item,save_item
 
+from operator import attrgetter
+
 
 from todo_app.flask_config import Config
 
@@ -13,9 +15,10 @@ app.config.from_object(Config())
 @app.route('/')
 def index():
     
+    items = get_items()
+    sorted_items = sorted(items, key=attrgetter('status'))
 
-
-    return render_template('index.html',items = get_items())
+    return render_template('index.html', items=sorted_items)
 
 @app.route('/submit', methods=['POST'] )
 def submit():
