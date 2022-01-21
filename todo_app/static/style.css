@@ -1,4 +1,4 @@
-body{background-color: red;}
+body{background-color: rgb(136, 135, 135);}
 
 .flex{display: flex;
 flex-direction: row;}

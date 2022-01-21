@@ -1,9 +1,10 @@
 
-from flask import Flask ,render_template, sessions, request,redirect, url_for
 
-from todo_app.data.session_items import add_item, get_items ,get_item,save_item
+from flask import Flask ,render_template,  request,redirect, url_for
 
-from operator import attrgetter
+from todo_app.data.session_items import add_item, delete_item, get_items ,get_item,save_item
+
+
 
 
 from todo_app.flask_config import Config
@@ -37,3 +38,12 @@ def complete(id):
         
         
         return redirect(url_for('index'))
+
+@app.route("/delete/<id>", methods=['POST'])
+def delete(id):
+    
+        item=get_item(id)
+        delete_item(item)
+        
+        
+        return redirect(url_for('index'))        
