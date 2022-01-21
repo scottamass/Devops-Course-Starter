@@ -71,11 +71,13 @@ def save_item(item):
 
 
 def delete_item(item):
-    session.delete(item)
-
-
-
-
+    existing_items = get_items()
+    
+    existing_items.remove(item)
+    
+    session['items'] = existing_items
+    
+    return session['items']
 
 
 

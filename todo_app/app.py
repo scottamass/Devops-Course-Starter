@@ -42,8 +42,9 @@ def complete(id):
 @app.route("/delete/<id>", methods=['POST'])
 def delete(id):
     
+        
         item=get_item(id)
-        delete_item(item)
+        delete_item(item) 
         
         
         return redirect(url_for('index'))        
