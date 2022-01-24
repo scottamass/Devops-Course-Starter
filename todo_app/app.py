@@ -18,8 +18,8 @@ def index():
     
     
     items = sorted(get_items(), key=lambda i: i['status'] ,reverse=True)
-
-    return render_template('index.html', items=items)
+    
+    return render_template('index.html', items=items, user="user")
 
 @app.route('/submit', methods=['POST'] )
 def submit():

@@ -4,8 +4,10 @@
 {% block content %}
   <div class="jumbotron">
     <h1 class="display-4">To-Do App</h1>
-    <p class="lead">Just another to-do app.</p>
-  </div>
+    <h2>Hello,</h2>
+    <h2> {{user}} </h2>
+  
+  <h3>So what would you like to do?</h3>
 <div class= "form">
   <form action="/submit" method="POST">
     <input type ='text' name="title" id="title" ></input>
@@ -15,33 +17,38 @@
   <div class="row">
     <div class="col-md-12">
       <h2>Items</h2>
-      <ul class="list-group mb-4">
-          {% for item in items%}
-              <div class="card" style="min-width: 18rem; margin-bottom: 1rem;">
-                        <div class="card-body">
-                  <h5 class="card-title">{{item.title}}</h5>
-                </div>
-                    {% if "done" in item.status %}
-                      {% set box_colour = "success" %} 
-                    {% else %}  
-                      {% set box_colour = "danger" %}
-                    {% endif %}
-                    <div class="alert alert-{{box_colour}}" role="alert">
-                      {{item.status}}
-                    </div>
-                  <div class="flex">
-                  <form action="/complete/{{item.id}}" method="POST">
-                    <button type="submit" class="btn btn-primary">mark as complete</button>
-                  </form>
-                  <form action="/delete/{{item.id}}" method="POST">
-                  <button type="submit" class="btn btn-danger" >DELETE</button>
-                  </form>
+      {% if items %}
+        <ul class="list-group mb-4">
+            {% for item in items%}
+                <div class="card" style="min-width: 18rem; margin-bottom: 1rem;">
+                          <div class="card-body">
+                    <h5 class="card-title">{{item.title}}</h5>
                   </div>
-                </div>
-            
+                      {% if "done" in item.status %}
+                        {% set box_colour = "success" %} 
+                      {% else %}  
+                        {% set box_colour = "danger" %}
+                      {% endif %}
+                      <div class="alert alert-{{box_colour}}" role="alert">
+                        {{item.status}}
+                      </div>
+                    <div class="flex">
+                    <form action="/complete/{{item.id}}" method="POST">
+                      <button type="submit" class="btn btn-primary">mark as complete</button>
+                    </form>
+                    <form action="/delete/{{item.id}}" method="POST">
+                    <button type="submit" class="btn btn-danger" >DELETE</button>
+                    </form>
+                    </div>
+                  </div>
               
-          {% endfor %}
-      </ul>
+                
+            {% endfor %}
+        </ul>
+      {% else %}
+        <h2>wow it looks like you have nothing to do</h2>
+      {% endif %}  
     </div>
   </div>
 {% endblock %}
+</div>
