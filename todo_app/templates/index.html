@@ -2,17 +2,66 @@
 {% block title %}To-Do App{% endblock %}
 
 {% block content %}
-  <div class="jumbotron">
-    <h1 class="display-4">To-Do App</h1>
-    <p class="lead">Just another to-do app.</p>
+  <div class="card">
+    <div class="card-body">
+    <h2>Hello,{{user}}</h2>
+    
+    {% if outstanding %}
+      {% if (outstanding == 1) %}
+        <h3>you have {{outstanding}} task outstanding</h3>
+      {%else%}
+        <h3>you have {{outstanding}} tasks outstanding</h3>   
+      {% endif %}
+      {%else%}
+      <h3>wow it looks like you have done everything</h3>
+    {% endif %}  
+    </div>
   </div>
 
+<div class= "card form" style="padding-top: 1em; margin-top:1em ;">
+  <form action="/submit" method="POST">
+    <input  type ='text' class="text-boxin" name="title" id="title" placeholder="So what would you like to do?" required></input>
+    <input class="btn btn-primary btn-block" type='submit' value="new task"></input>
+  </form> 
+</div>
   <div class="row">
     <div class="col-md-12">
-      <h2>Items</h2>
-      <ul class="list-group mb-4">
-        <!-- List the todo items here -->
-      </ul>
+      {% if items %}
+        
+            {% for item in items%}
+              {% if "In Progress" in item.status %}
+                {% set box_colour = "warning" %}
+              {% elif "done" in item.status %}
+                {% set box_colour = "success" %}
+              {% endif %}
+                <div class="card " style="min-width: 18rem; margin-top: 1rem;">
+                          <div class="card-body bg-{{box_colour}}">
+                    <h5 class="card-title">{{item.title}} - {{item.status}} </h5>
+                  </div>
+
+                     
+                    <div class="flex">
+                      {% if "In Progress" in item.status %}  
+                        <form action="/complete/{{item.id}}" method="POST">
+                          <button type="submit" class="btn btn-primary">Done</button>
+                        </form>
+                      {% elif "Not Started" in item.status %}
+                        <form action="/doing/{{item.id}}" method="POST">
+                          <button type="submit" class="btn btn-warning">Start</button>
+                        </form>
+                    {% endif %}    
+                    <form action="/delete/{{item.id}}" method="POST">
+                    <button type="submit" class="btn btn-danger" >DELETE</button>
+                    </form>
+                    </div>
+                  </div>
+              
+                
+            {% endfor %}
+        
+      {% else %}
+        <h2>wow it looks like you have nothing to do</h2>
+      {% endif %}  
     </div>
   </div>
 {% endblock %}
