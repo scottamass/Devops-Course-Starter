@@ -1,4 +1,6 @@
 from flask import session
+from todo_app.data.CONFIG import *
+import requests
 
 _DEFAULT_ITEMS = [
     { 'id': 1, 'status': 'Not Started', 'title': 'List saved todo items' },
@@ -7,13 +9,13 @@ _DEFAULT_ITEMS = [
 
 
 def get_items():
-    """
-    Fetches all saved items from the session.
-
-    Returns:
-        list: The list of saved items.
-    """
-    return session.get('items', _DEFAULT_ITEMS.copy())
+    
+    params = {'key': API, 'token': TOKEN}
+    all = requests.get(f'{URL}',params=params).json()
+    
+    return all
+    
+   
 
 
 def get_item(id):

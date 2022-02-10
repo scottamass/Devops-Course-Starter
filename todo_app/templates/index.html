@@ -4,9 +4,9 @@
 {% block content %}
   <div class="card">
     <div class="card-body">
-    <h2>Hello,{{user}}</h2>
+    <h2>Hello</h2>
     
-    {% if outstanding %}
+    <!--{% if outstanding %}
       {% if (outstanding == 1) %}
         <h3>you have {{outstanding}} task outstanding</h3>
       {%else%}
@@ -14,7 +14,7 @@
       {% endif %}
       {%else%}
       <h3>wow it looks like you have done everything</h3>
-    {% endif %}  
+    {% endif %}  --> 
     </div>
   </div>
 
@@ -29,14 +29,10 @@
       {% if items %}
         
             {% for item in items%}
-              {% if "In Progress" in item.status %}
-                {% set box_colour = "warning" %}
-              {% elif "done" in item.status %}
-                {% set box_colour = "success" %}
-              {% endif %}
+              
                 <div class="card " style="min-width: 18rem; margin-top: 1rem;">
                           <div class="card-body bg-{{box_colour}}">
-                    <h5 class="card-title">{{item.title}} - {{item.status}} </h5>
+                    <h5 class="card-title">{{item['name']}}</h5>
                   </div>
 
                      
