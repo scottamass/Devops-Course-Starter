@@ -5,7 +5,7 @@ from flask import Flask ,render_template,  request,redirect, url_for
 from todo_app.data.session_items import add_item, delete_item, get_items ,get_item,save_item
 from todo_app.data.functions import tasks
 from todo_app.data.CONFIG import *
-from todo_app.data.trello_items import get_trello_items, get_username , add_trello_item, delete_trello_item,done_trello_item
+from todo_app.data.trello_items import get_trello_items, get_username , add_trello_item, delete_trello_item,done_trello_item,doing_trello_item
 
 
 
@@ -43,9 +43,7 @@ def complete(id):
 @app.route("/doing/<id>", methods=['POST'])
 def doing(id):
     
-        item=get_item(id)
-        item['status'] ="In Progress"
-        save_item(item)
+        doing_trello_item(id)
         
         
         return redirect(url_for('index'))        

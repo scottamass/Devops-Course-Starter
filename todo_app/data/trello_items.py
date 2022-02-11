@@ -25,7 +25,8 @@ def delete_trello_item(card_id):
     requests.delete(f'{URL}cards/{card_id}',params=params )
 
 def doing_trello_item(card_id):
-    pass
+    params = {'key': API, 'token': TOKEN,'idList':DOING_LISTID }
+    requests.put(f'{URL}cards/{card_id}',params=params )
 def done_trello_item(card_id):
     params = {'key': API, 'token': TOKEN,'idList':LISTID_DONE }
     requests.put(f'{URL}cards/{card_id}',params=params )       

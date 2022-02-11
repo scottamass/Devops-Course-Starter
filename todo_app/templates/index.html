@@ -18,7 +18,7 @@
     </div>
   </div>
 
-<div class= "card form" style="padding-top: 1em; margin-top:1em ;">
+<div class= "card form sticky-top" style="padding-top: 1em; margin-top:1em ;">
   <form action="/submit" method="POST">
     <input  type ='text' class="text-boxin" name="title" id="title" placeholder="So what would you like to do?" required></input>
     <input class="btn btn-primary btn-block" type='submit' value="new task"></input>
@@ -37,11 +37,11 @@
 
                      
                     <div class="flex">
-                      {% if "6203eebcce1bc23a2cdb269e" in item.idList %}  
+                      {% if "6203fa6a0993404070712d52" in item.idList %}  
                         <form action="/complete/{{item.id}}" method="POST">
-                          <button type="submit" class="btn btn-primary">Done</button>
+                          <button type="submit" class="btn btn-success">Done</button>
                         </form>
-                      {% elif "Not Started" in item.status %}
+                      {% elif "6203eebcce1bc23a2cdb269e" in item.idList %}
                         <form action="/doing/{{item.id}}" method="POST">
                           <button type="submit" class="btn btn-warning">Start</button>
                         </form>
