@@ -1,6 +1,15 @@
 import requests
-
 from todo_app.data.CONFIG import *
+
+
+class Item: 
+    def __init__(self, id, name, status = TODO_ID): 
+        self.id = id 
+        self.name = name 
+        self.status = status 
+    @classmethod 
+    def from_trello_card(cls, card, list): 
+        return cls(card['id'], card['name'], list['name']) 
 
 def get_username():
     params = {'key': API, 'token': TOKEN}
