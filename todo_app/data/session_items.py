@@ -9,11 +9,27 @@ _DEFAULT_ITEMS = [
 
 
 def get_items():
-    
-    params = {'key': API, 'token': TOKEN}
-    all = requests.get(f'{URL}',params=params).json()
-    
-    return all
+    """
+    Fetches all saved items from the session.
+
+    Returns:
+        list: The list of saved items.
+    """
+    return session.get('items', _DEFAULT_ITEMS.copy())
+
+
+def get_item(id):
+    """
+    Fetches the saved item with the specified ID.
+
+    Args:
+        id: The ID of the item.
+
+    Returns:
+        item: The saved item, or None if no items match the specified ID.
+    """
+    items = get_items()
+    return next((item for item in items if item['id'] == int(id)), None)
     
    
 
