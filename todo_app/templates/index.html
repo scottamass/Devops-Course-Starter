@@ -33,15 +33,16 @@
                 <div class="card " style="min-width: 18rem; margin-top: 1rem;">
                           <div class="card-body bg-{{box_colour}}">
                     <h5 class="card-title">{{item['name']}}</h5>
+                    <p>{{item.dayLastActivity}}/{{item.monthLastActivity}}/{{item.yearLastActivity}}@{{item.timeLastActivity}} </p>
                   </div>
 
                      
                     <div class="flex">
-                      {% if "6203fa6a0993404070712d52" in item.idList %}  
+                      {% if doing in item.idList %}  
                         <form action="/complete/{{item.id}}" method="POST">
                           <button type="submit" class="btn btn-success">Done</button>
                         </form>
-                      {% elif "6203eebcce1bc23a2cdb269e" in item.idList %}
+                      {% elif todo in item.idList %}
                         <form action="/doing/{{item.id}}" method="POST">
                           <button type="submit" class="btn btn-warning">Start</button>
                         </form>

@@ -3,13 +3,17 @@ from todo_app.data.CONFIG import *
 
 
 class Item: 
-    def __init__(self, id, name, idList = TODO_ID): 
+    def __init__(self, id, name, idList , dateLastActivity): 
         self.id = id 
         self.name = name 
         self.idList = idList 
+        self.yearLastActivity = dateLastActivity[0:4]
+        self.monthLastActivity = dateLastActivity[5:7]
+        self.dayLastActivity = dateLastActivity[8:10]
+        self.timeLastActivity = dateLastActivity[11:16]
     @classmethod 
     def from_trello_card(cls, card): 
-        return cls(card['id'], card['name'], card['idList']) 
+        return cls(card['id'], card['name'], card['idList'],card['dateLastActivity'] ) 
 
 def get_username():
     params = {'key': API, 'token': TOKEN}
