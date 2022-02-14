@@ -3,13 +3,13 @@ from todo_app.data.CONFIG import *
 
 
 class Item: 
-    def __init__(self, id, name, status = TODO_ID): 
+    def __init__(self, id, name, idList = TODO_ID): 
         self.id = id 
         self.name = name 
-        self.status = status 
+        self.idList = idList 
     @classmethod 
-    def from_trello_card(cls, card, list): 
-        return cls(card['id'], card['name'], list['name']) 
+    def from_trello_card(cls, card): 
+        return cls(card['id'], card['name'], card['idList']) 
 
 def get_username():
     params = {'key': API, 'token': TOKEN}
@@ -21,9 +21,11 @@ def get_trello_items():
     
     params = {'key': API, 'token': TOKEN}
     all = requests.get(f'{URL}boards/MLtxybJW/cards',params=params).json()
-    
-    return all
-
+    items = []
+    for card in all:
+      item = Item.from_trello_card(card)
+      items.append(item)
+    return items
 def add_trello_item(title):
     params = {'key': API, 'token': TOKEN,'idList':TODO_ID,'name':title }
     requests.post(f'{URL}cards',params=params )

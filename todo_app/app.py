@@ -1,6 +1,6 @@
 
 
-from flask import Flask ,render_template,  request,redirect, url_for
+from flask import Flask ,render_template, request,redirect, url_for
 
 from todo_app.data.session_items import add_item, delete_item, get_items ,get_item,save_item
 from todo_app.data.functions import tasks
@@ -22,7 +22,7 @@ def index():
     
     items = get_trello_items()
     name = get_username()
-    return render_template('index.html', items=items, name=name)
+    return render_template('index.html', items=items, name=name, todo=TODO_ID, doing=DOING_LISTID, done=LISTID_DONE)
 
 @app.route('/submit', methods=['POST'] )
 def submit():
