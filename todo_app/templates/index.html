@@ -25,18 +25,18 @@
                 <div class="card " style="min-width: 18rem; margin-top: 1rem;">
                           <div class="card-body bg-{{box_colour}}">
                             <div class="flex" style="justify-content: space-between;">
-                            <h5 class="card-title">{{item['name']}}</h5>
-                            {% if doing in item.idList %}  
+                            <h5 class="card-title">{{item.name}}</h5>
+                            {% if "Doing" in item.list %}  
                             <div class=" alert alert-warning" role="alert" style="-ms-flex-align: end;">
-                              IN PROGRESS
+                              {{item.list}}
                             </div>
-                      {% elif todo in item.idList %}
+                      {% elif "To-do" in item.list %}
                       <div class="alert alert-danger" role="alert" style="-ms-flex-align: end;">
-                        NOT STARTED
+                        {{item.list}}
                       </div>
                       {% else %}
                       <div class="alert alert-success" role="alert" style="-ms-flex-align: end;">
-                        DONE
+                        {{item.list}}
                       </div>
                     {% endif %}    
                           </div>
