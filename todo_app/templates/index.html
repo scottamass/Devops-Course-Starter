@@ -2,7 +2,8 @@
 {% block title %}To-Do App{% endblock %}
 
 {% block content %}
-  <div class="card">
+<div class="container">  
+<div class="card">
     <div class="card-body">
     <h2>Hello {{name['fullName']}}</h2>
     
@@ -16,68 +17,154 @@
     <input class="btn btn-primary btn-block" type='submit' value="new task"></input>
   </form> 
 </div>
+</div>
+<div class="container-fluid">
   <div class="row">
-    <div class="col-md-12">
-      {% if items %}
+    
+    <div class="col-lg-4">
+      {% for item in items%}
+      {% if "To-do" in item.list %}
         
-            {% for item in items%}
-              
-                <div class="card " style="min-width: 18rem; margin-top: 1rem;">
-                          <div class="card-body bg-{{box_colour}}">
-                            <div class="flex" style="justify-content: space-between;">
-                            <h5 class="card-title">{{item.name}}</h5>
+          <div class="card " style="min-width: 18rem; margin-top: 1rem;">
+            <!-- top of card -->
+            <div class="card-body bg-{{box_colour}}">
+              <div class="flex" style="justify-content: space-between;">
+                 <h5 class="card-title">{{item.name}}</h5>
                             {% if "Doing" in item.list %}  
-                            <div class=" alert alert-warning" role="alert" style="-ms-flex-align: end;">
-                              {{item.list}}
-                            </div>
+                  <div class=" alert alert-warning" role="alert" style="-ms-flex-align: end;">
+                    {{item.list}}
+                  </div>
                       {% elif "To-do" in item.list %}
-                      <div class="alert alert-danger" role="alert" style="-ms-flex-align: end;">
+                  <div class="alert alert-danger" role="alert" style="-ms-flex-align: end;">
                         {{item.list}}
-                      </div>
+                  </div>
                       {% else %}
                       <div class="alert alert-success" role="alert" style="-ms-flex-align: end;">
                         {{item.list}}
                       </div>
                     {% endif %}    
-                          </div>
+                    </div>
                     
                   </div>
-                  
-
-                     
-                    <div class="flex"  style="justify-content: space-between;  padding-left: 1em;padding-right: 1em;">
+                  <!-- bottom of card -->
+                  <div class="flex"  style="justify-content: space-between;  padding-left: 1em;padding-right: 1em;">
                       <p>{{item.dayLastActivity}}/{{item.monthLastActivity}}/{{item.yearLastActivity}}@{{item.timeLastActivity}} </p>
-                     <div class="buttons flex">
-                      {% if doing in item.idList %}  
+                    <div class="buttons flex">
+                      {% if "Doing" in item.list %}  
                         <form action="/complete/{{item.id}}" method="POST">
                           <button type="submit" class="btn btn-success">Done</button>
                         </form>
-                      {% elif todo in item.idList %}
+                      {% elif "To-do" in item.list %}
                         <form action="/doing/{{item.id}}" method="POST">
                           <button type="submit" class="btn btn-warning">Start</button>
                         </form>
-                    {% endif %}    
-                    <form action="/delete/{{item.id}}" method="POST">
-                    <button type="submit" class="btn btn-danger" style="margin-left: .5em;" >DELETE</button>
-                    </form>
+                      {% endif %}    
+                        <form action="/delete/{{item.id}}" method="POST">
+                          <button type="submit" class="btn btn-danger" style="margin-left: .5em;" >DELETE</button>
+                        </form>
                     </div>
+                  </div> 
+                </div>
+              
+      {% endif %}  
+      {% endfor %}    
+    </div>
+    <div class="col-lg-4">
+    {% for item in items%}  
+    {% if "Doing" in item.list %}    
+      <div class="card " style="min-width: 18rem; margin-top: 1rem;">
+        <!-- top of card -->
+        <div class="card-body bg-{{box_colour}}">
+          <div class="flex" style="justify-content: space-between;">
+             <h5 class="card-title">{{item.name}}</h5>
+                        {% if "Doing" in item.list %}  
+              <div class=" alert alert-warning" role="alert" style="-ms-flex-align: end;">
+                {{item.list}}
+              </div>
+                  {% elif "To-do" in item.list %}
+              <div class="alert alert-danger" role="alert" style="-ms-flex-align: end;">
+                    {{item.list}}
+              </div>
+                  {% else %}
+                  <div class="alert alert-success" role="alert" style="-ms-flex-align: end;">
+                    {{item.list}}
                   </div>
+                {% endif %}    
+                </div>
+                
+              </div>
+              <!-- bottom of card -->
+              <div class="flex"  style="justify-content: space-between;  padding-left: 1em;padding-right: 1em;">
+                  <p>{{item.dayLastActivity}}/{{item.monthLastActivity}}/{{item.yearLastActivity}}@{{item.timeLastActivity}} </p>
+                <div class="buttons flex">
+                  {% if "Doing" in item.list %}  
+                    <form action="/complete/{{item.id}}" method="POST">
+                      <button type="submit" class="btn btn-success">Done</button>
+                    </form>
+                  {% elif "To-do" in item.list %}
+                    <form action="/doing/{{item.id}}" method="POST">
+                      <button type="submit" class="btn btn-warning">Start</button>
+                    </form>
+                  {% endif %}    
+                    <form action="/delete/{{item.id}}" method="POST">
+                      <button type="submit" class="btn btn-danger" style="margin-left: .5em;" >DELETE</button>
+                    </form>
+                </div>
+              </div> 
+      </div>
+    {% endif %}      
+    {% endfor %}     
+    </div>
+    <div class="col-lg-4">
+      {% for item in items%}
+      {% if "Done" in item.list %}
+        
+          <div class="card " style="min-width: 18rem; margin-top: 1rem;">
+            <!-- top of card -->
+            <div class="card-body bg-{{box_colour}}">
+              <div class="flex" style="justify-content: space-between;">
+                 <h5 class="card-title">{{item.name}}</h5>
+                            {% if "Doing" in item.list %}  
+                  <div class=" alert alert-warning" role="alert" style="-ms-flex-align: end;">
+                    {{item.list}}
+                  </div>
+                      {% elif "To-do" in item.list %}
+                  <div class="alert alert-danger" role="alert" style="-ms-flex-align: end;">
+                        {{item.list}}
+                  </div>
+                      {% else %}
+                      <div class="alert alert-success" role="alert" style="-ms-flex-align: end;">
+                        {{item.list}}
+                      </div>
+                    {% endif %}    
+                    </div>
                     
                   </div>
+                  <!-- bottom of card -->
+                  <div class="flex"  style="justify-content: space-between;  padding-left: 1em;padding-right: 1em;">
+                      <p>{{item.dayLastActivity}}/{{item.monthLastActivity}}/{{item.yearLastActivity}}@{{item.timeLastActivity}} </p>
+                    <div class="buttons flex">
+                      {% if "Doing" in item.list %}  
+                        <form action="/complete/{{item.id}}" method="POST">
+                          <button type="submit" class="btn btn-success">Done</button>
+                        </form>
+                      {% elif "To-do" in item.list %}
+                        <form action="/doing/{{item.id}}" method="POST">
+                          <button type="submit" class="btn btn-warning">Start</button>
+                        </form>
+                      {% endif %}    
+                        <form action="/delete/{{item.id}}" method="POST">
+                          <button type="submit" class="btn btn-danger" style="margin-left: .5em;" >DELETE</button>
+                        </form>
+                    </div>
+                  </div> 
+                </div>
               
-                
-            {% endfor %}
-        
-      {% else %}
-        <h2>wow it looks like you have nothing to do</h2>
-      {% endif %}  
+      {% endif %}    
+      {% endfor %}    
     </div>
+    
   </div>
-  <div class="card">
-    {{Item}}
-  </div>
+</div>
 {% endblock %}
 
-<div class="card">
-
-</div>
