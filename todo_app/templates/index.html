@@ -6,15 +6,7 @@
     <div class="card-body">
     <h2>Hello {{name['fullName']}}</h2>
     
-    <!--{% if outstanding %}
-      {% if (outstanding == 1) %}
-        <h3>you have {{outstanding}} task outstanding</h3>
-      {%else%}
-        <h3>you have {{outstanding}} tasks outstanding</h3>   
-      {% endif %}
-      {%else%}
-      <h3>wow it looks like you have done everything</h3>
-    {% endif %}  --> 
+ 
     </div>
   </div>
 
@@ -32,12 +24,30 @@
               
                 <div class="card " style="min-width: 18rem; margin-top: 1rem;">
                           <div class="card-body bg-{{box_colour}}">
-                    <h5 class="card-title">{{item['name']}}</h5>
-                    <p>{{item.dayLastActivity}}/{{item.monthLastActivity}}/{{item.yearLastActivity}}@{{item.timeLastActivity}} </p>
+                            <div class="flex" style="justify-content: space-between;">
+                            <h5 class="card-title">{{item['name']}}</h5>
+                            {% if doing in item.idList %}  
+                            <div class=" alert alert-warning" role="alert" style="-ms-flex-align: end;">
+                              IN PROGRESS
+                            </div>
+                      {% elif todo in item.idList %}
+                      <div class="alert alert-danger" role="alert" style="-ms-flex-align: end;">
+                        NOT STARTED
+                      </div>
+                      {% else %}
+                      <div class="alert alert-success" role="alert" style="-ms-flex-align: end;">
+                        DONE
+                      </div>
+                    {% endif %}    
+                          </div>
+                    
                   </div>
+                  
 
                      
-                    <div class="flex">
+                    <div class="flex"  style="justify-content: space-between;  padding-left: 1em;padding-right: 1em;">
+                      <p>{{item.dayLastActivity}}/{{item.monthLastActivity}}/{{item.yearLastActivity}}@{{item.timeLastActivity}} </p>
+                     <div class="buttons flex">
                       {% if doing in item.idList %}  
                         <form action="/complete/{{item.id}}" method="POST">
                           <button type="submit" class="btn btn-success">Done</button>
@@ -48,9 +58,11 @@
                         </form>
                     {% endif %}    
                     <form action="/delete/{{item.id}}" method="POST">
-                    <button type="submit" class="btn btn-danger" >DELETE</button>
+                    <button type="submit" class="btn btn-danger" style="margin-left: .5em;" >DELETE</button>
                     </form>
                     </div>
+                  </div>
+                    
                   </div>
               
                 
