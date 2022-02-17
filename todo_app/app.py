@@ -1,11 +1,8 @@
 
 
 from flask import Flask ,render_template, request,redirect, url_for
-
-from todo_app.data.session_items import add_item, delete_item, get_items ,get_item,save_item
-from todo_app.data.functions import tasks
 from todo_app.data.CONFIG import *
-from todo_app.data.trello_items import get_trello_items, get_username , add_trello_item, delete_trello_item,done_trello_item,doing_trello_item,Item
+from todo_app.data.trello_items import get_trello_items, get_username , add_trello_item, delete_trello_item,set_item_to_done,set_item_to_doing,Item
 
 
 
@@ -34,28 +31,17 @@ def submit():
 
 @app.route("/complete/<id>", methods=['POST'])
 def complete(id):
-    
-        done_trello_item(id)
-        
-        
+        set_item_to_done(id)
         return redirect(url_for('index'))
 
 @app.route("/doing/<id>", methods=['POST'])
 def doing(id):
-    
-        doing_trello_item(id)
-        
-        
+        set_item_to_doing(id)
         return redirect(url_for('index'))        
 
 @app.route("/delete/<id>", methods=['POST'])
-def delete(id):
-    
-        
-        
+def delete(id): 
         delete_trello_item(id) 
-        
-        
         return redirect(url_for('index'))        
 
 
