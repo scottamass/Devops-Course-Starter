@@ -1,8 +1,24 @@
 import os
+import requests
+
+
 TOKEN=os.getenv("TOKEN")
-API="29c9b7a1a276364511ec1af2d2e0beed"
+API=os.getenv('API')
 BOARD="MLtxybJW"
 URL="https://api.trello.com/1/"
-TODO_ID="6203eebcce1bc23a2cdb269e"
-DOING_LISTID="6203fa6a0993404070712d52"
-LISTID_DONE="6203fa700339bf86b0d7a1c9"
+
+
+def get_list_id(name):
+    params = {'key': API, 'token': TOKEN}
+    trello_lists = requests.get(f'{URL}boards/MLtxybJW/lists',params=params).json()
+    for l in trello_lists:
+        if l['name'] == name:
+            id=l['id']  
+            print(id)          
+    return id
+
+
+
+TODO_ID=get_list_id('To-do')
+DOING_LISTID=get_list_id('Doing')
+LISTID_DONE=get_list_id('Done')  

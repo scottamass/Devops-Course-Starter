@@ -3,7 +3,7 @@ from todo_app.data.CONFIG import *
 
 
 class Item: 
-    def __init__(self, id, name, dateLastActivity,list): 
+    def __init__(self, id, name, dateLastActivity,list,): 
         self.id = id 
         self.name = name
         self.list = list
@@ -14,6 +14,7 @@ class Item:
     @classmethod 
     def from_trello_card(cls, card,list): 
         return cls(card['id'], card['name'], card['dateLastActivity'], list['name']) 
+
 
 def get_username():
     params = {'key': API, 'token': TOKEN}
@@ -48,3 +49,8 @@ def doing_trello_item(card_id):
 def done_trello_item(card_id):
     params = {'key': API, 'token': TOKEN,'idList':LISTID_DONE }
     requests.put(f'{URL}cards/{card_id}',params=params )       
+
+
+
+
+    
