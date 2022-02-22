@@ -61,5 +61,5 @@ please make sure you trello bord has the following lists
 
 go to the trello api docs to get your trello key and replace the place holders in the env template with your api and token key 
 bord id can been found in the address bar see exmaple below 
-![Alt text](/readmeimages/screenshot.jpg "Optional title")
+![Alt text](todo_app/readmeimages/screenshot.jpg "Optional title")
 go to the CONFIG.py file and update your bord varible with the board varible from trello board 
