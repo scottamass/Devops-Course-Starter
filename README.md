@@ -50,3 +50,11 @@ You should see output similar to the following:
  * Debugger PIN: 226-556-590
 ```
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
+
+
+
+### setting up with trello 
+
+go to the trello api docs to get your trello key and replace the place holders in the env template with your api and token key 
+
+go to the CONFIG.py file and update your bord varible with the board variblr from trello board 
