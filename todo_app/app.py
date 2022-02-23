@@ -25,14 +25,18 @@ def index():
 def submit():
     if request.method =='POST':
         title=request.form.get('title')
-        if request.form.get('due_date') != 'None':
+        
+        if request.form.get('due_date') != None:
                 preprocessed_date=request.form.get('due_date')
-                print (preprocessed_date)
+                
                 due_month=preprocessed_date[3:5]
                 due_day=preprocessed_date[0:2]
                 due_year= preprocessed_date[5:10]
                 total=(f'{due_month}/{due_day}{due_year}')
                 due_date=total
+        if request.form.get('due_date') == "":
+                
+                due_date=None     
         add_trello_item(title,due_date)
         return redirect(url_for('index') )
 

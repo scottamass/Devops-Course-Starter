@@ -3,7 +3,7 @@ from todo_app.data.CONFIG import *
 
 
 class Item: 
-    def __init__(self, id, name, dateLastActivity,due,list,): 
+    def __init__(self, id, name, dateLastActivity,due,list): 
         self.id = id 
         self.name = name
         self.list = list
@@ -11,8 +11,13 @@ class Item:
         self.monthLastActivity = dateLastActivity[5:7]
         self.dayLastActivity = dateLastActivity[8:10]
         self.timeLastActivity = dateLastActivity[11:16]
-        self.due= due[8:10]+'-'+due[5:7]+'-'+due[0:4]
-        print (self.due)
+        if due != None:
+            self.due= due[8:10]+'-'+due[5:7]+'-'+due[0:4]
+            
+        if due == None:    
+            self.due = due
+            
+        
     @classmethod 
     def from_trello_card(cls, card,list): 
         return cls(card['id'], card['name'], card['dateLastActivity'],card['due'], list['name']) 
