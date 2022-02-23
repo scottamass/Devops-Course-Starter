@@ -3,7 +3,7 @@ from todo_app.data.CONFIG import *
 
 
 class Item: 
-    def __init__(self, id, name, dateLastActivity,list,): 
+    def __init__(self, id, name, dateLastActivity,due,list,): 
         self.id = id 
         self.name = name
         self.list = list
@@ -11,9 +11,11 @@ class Item:
         self.monthLastActivity = dateLastActivity[5:7]
         self.dayLastActivity = dateLastActivity[8:10]
         self.timeLastActivity = dateLastActivity[11:16]
+        self.due= due[8:10]+'-'+due[5:7]+'-'+due[0:4]
+        print (self.due)
     @classmethod 
     def from_trello_card(cls, card,list): 
-        return cls(card['id'], card['name'], card['dateLastActivity'], list['name']) 
+        return cls(card['id'], card['name'], card['dateLastActivity'],card['due'], list['name']) 
 
 
 def get_username():
@@ -25,7 +27,7 @@ def get_username():
 def get_trello_items():
     
     params = {'key': API, 'token': TOKEN, 'cards':'open'}
-    trello_lists = requests.get(f'{URL}boards/MLtxybJW/lists',params=params).json()
+    trello_lists = requests.get(f'{URL}boards/{BOARD}/lists',params=params).json()
     items = []
     for trello_list in trello_lists:
         for trello_card in trello_list['cards']:
@@ -34,8 +36,8 @@ def get_trello_items():
 
     return items
 
-def add_trello_item(title):
-    params = {'key': API, 'token': TOKEN,'idList':TODO_ID,'name':title }
+def add_trello_item(title,date):
+    params = {'key': API, 'token': TOKEN,'idList':TODO_ID,'name':title ,'due':date}
     requests.post(f'{URL}cards',params=params )
 
 def delete_trello_item(card_id):

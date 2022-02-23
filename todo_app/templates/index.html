@@ -14,7 +14,23 @@
 <div class= "card form sticky-top" style="padding-top: 1em; margin-top:1em ;">
   <form action="/submit" method="POST">
     <input  type ='text' class="text-boxin" name="title" id="title" placeholder="So what would you like to do?" required></input>
-    <input class="btn btn-primary btn-block" type='submit' value="new task"></input>
+    
+    <div class="row form-group">
+      <label for="date" class="col-sm-2 col-form-label">Date Due</label>
+      <div class="col-sm-4">
+          <div class="input-group date" id="datepicker">
+              <input type="text" name="due_date" id="due_date" class="form-control">
+              <span class="input-group-append">
+                  <span class="input-group-text bg-white">
+                      <i class="fa fa-calendar"></i>
+                  </span>
+              </span>
+          </div>
+      </div>
+  </div>
+  <input class="btn btn-primary btn-block" type='submit' value="new task"></input>
+
+  </div>
   </form> 
 </div>
 </div>
@@ -47,7 +63,7 @@
               </div>
               <!-- bottom of card -->
               <div class="flex"  style="justify-content: space-between;  padding-left: 1em;padding-right: 1em;">
-                  <p>{{item.dayLastActivity}}/{{item.monthLastActivity}}/{{item.yearLastActivity}}@{{item.timeLastActivity}} </p>
+                <p>Due Date: {{item.due}} </p>
                 <div class="buttons flex">
                   {% if "Doing" in item.list %}  
                     <form action="/complete/{{item.id}}" method="POST">
@@ -94,7 +110,7 @@
                   </div>
                   <!-- bottom of card -->
                   <div class="flex"  style="justify-content: space-between;  padding-left: 1em;padding-right: 1em;">
-                      <p>{{item.dayLastActivity}}/{{item.monthLastActivity}}/{{item.yearLastActivity}}@{{item.timeLastActivity}} </p>
+                      <p>Due Date: {{item.due}} </p>
                     <div class="buttons flex">
                       {% if "Doing" in item.list %}  
                         <form action="/complete/{{item.id}}" method="POST">
@@ -110,6 +126,7 @@
                         </form>
                     </div>
                   </div> 
+                  
                 </div>
               
       {% endif %}  
@@ -142,7 +159,7 @@
                   </div>
                   <!-- bottom of card -->
                   <div class="flex"  style="justify-content: space-between;  padding-left: 1em;padding-right: 1em;">
-                      <p>{{item.dayLastActivity}}/{{item.monthLastActivity}}/{{item.yearLastActivity}}@{{item.timeLastActivity}} </p>
+                      <p>Due Date: {{item.due}} </p>
                     <div class="buttons flex">
                       {% if "Doing" in item.list %}  
                         <form action="/complete/{{item.id}}" method="POST">
