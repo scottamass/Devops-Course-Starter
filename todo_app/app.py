@@ -2,7 +2,7 @@
 
 from flask import Flask ,render_template, request,redirect, url_for
 from todo_app.data.CONFIG import *
-from todo_app.data.trello_items import get_trello_items, get_username , add_trello_item, delete_trello_item,set_item_to_done,set_item_to_doing,Item
+from todo_app.data.trello_items import get_trello_items, get_username , add_trello_item, delete_trello_item,set_item_to_done,set_item_to_doing,Item,ViewModel
 
 
 
@@ -16,11 +16,12 @@ app.config.from_object(Config())
 
 @app.route('/')
 def index():
-   
-    
+
     items = get_trello_items()
+    item_view_model=ViewModel(items)
+    print(item_view_model)
     name = get_username()
-    return render_template('index.html', items=items, name=name, todo=TODO_ID, doing=DOING_LISTID, done=LISTID_DONE)
+    return render_template('index.html', items=item_view_model, name=name)
 
 @app.route('/submit', methods=['POST'] )
 def submit():

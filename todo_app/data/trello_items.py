@@ -21,7 +21,12 @@ class Item:
     @classmethod 
     def from_trello_card(cls, card,list): 
         return cls(card['id'], card['name'], card['dateLastActivity'],card['due'], list['name']) 
-
+class ViewModel:
+        def __init__(self,items):
+            self._items =items    
+        @property
+        def items(self):
+            return self._items    
 
 def get_username():
     params = {'key': API, 'token': TOKEN}
