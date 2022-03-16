@@ -27,6 +27,9 @@ class ViewModel:
         @property
         def items(self):
             return self._items    
+        @property
+        def doing_items(self):
+            return []
 
 def get_username():
     params = {'key': API, 'token': TOKEN}

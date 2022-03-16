@@ -38,7 +38,7 @@
   <div class="row">
     
     <div class="col-lg-4  order-lg-2">
-    {% for item in items%}  
+    {% for item in view_items.items%}  
     {% if "Doing" in item.list %}    
       <div class="card " style="min-width: 18rem; margin-top: 1rem;">
         <!-- top of card -->
@@ -84,7 +84,7 @@
     {% endfor %}     
     </div>
     <div class="col-lg-4 order-lg-1">
-      {% for item in items%}
+      {% for item in view_items.items%}
       {% if "To-do" in item.list %}
         
           <div class="card " style="min-width: 18rem; margin-top: 1rem;">
@@ -133,7 +133,7 @@
       {% endfor %}    
     </div>
     <div class="col-lg-4 order-lg-3" >
-      {% for item in items%}
+      {% for item in view_items.items%}
       {% if "Done" in item.list %}
         
           <div class="card " style="min-width: 18rem; margin-top: 1rem;">

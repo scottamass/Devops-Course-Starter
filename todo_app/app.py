@@ -18,10 +18,11 @@ app.config.from_object(Config())
 def index():
 
     items = get_trello_items()
+    
     item_view_model=ViewModel(items)
-    print(item_view_model)
+    
     name = get_username()
-    return render_template('index.html', items=item_view_model, name=name)
+    return render_template('index.html', view_items=item_view_model, name=name)
 
 @app.route('/submit', methods=['POST'] )
 def submit():
