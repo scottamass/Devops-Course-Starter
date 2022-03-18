@@ -1,35 +1,9 @@
 import requests
 from todo_app.data.CONFIG import *
+from todo_app.data.item import Item
 
 
-class Item: 
-    def __init__(self, id, name, dateLastActivity,due,list): 
-        self.id = id 
-        self.name = name
-        self.list = list
-        self.yearLastActivity = dateLastActivity[0:4]
-        self.monthLastActivity = dateLastActivity[5:7]
-        self.dayLastActivity = dateLastActivity[8:10]
-        self.timeLastActivity = dateLastActivity[11:16]
-        if due != None:
-            self.due= due[8:10]+'-'+due[5:7]+'-'+due[0:4]
-            
-        if due == None:    
-            self.due = due
-            
-        
-    @classmethod 
-    def from_trello_card(cls, card,list): 
-        return cls(card['id'], card['name'], card['dateLastActivity'],card['due'], list['name']) 
-class ViewModel:
-        def __init__(self,items):
-            self._items =items    
-        @property
-        def items(self):
-            return self._items    
-        @property
-        def doing_items(self):
-            return []
+
 
 def get_username():
     params = {'key': API, 'token': TOKEN}
