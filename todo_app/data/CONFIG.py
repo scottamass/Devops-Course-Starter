@@ -2,14 +2,15 @@ import os
 import requests
 
 
-TOKEN=os.getenv("TOKEN")
-API=os.getenv('API')
-BOARD=os.getenv('BOARD')
+
+def BOARD():
+    return os.getenv('BOARD')
 URL="https://api.trello.com/1/"
 
 
+
 def get_list_id(name):
-    params = {'key': API, 'token': TOKEN}
+    params = {'key': os.getenv('API'), 'token': os.getenv("TOKEN")}
     trello_lists = requests.get(f'{URL}boards/{BOARD}/lists',params=params).json()
     for l in trello_lists:
         if l['name'] == name:
@@ -17,7 +18,10 @@ def get_list_id(name):
     return id
 
 
+def TODO_ID():
+    return get_list_id('To-do')
 
-TODO_ID=get_list_id('To-do')
-DOING_LISTID=get_list_id('Doing')
-LISTID_DONE=get_list_id('Done')  
+def DOING_LISTID():
+    return get_list_id('Doing')
+def LISTID_DONE():
+    return get_list_id('Done')  

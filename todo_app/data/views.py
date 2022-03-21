@@ -1,5 +1,4 @@
-from todo_app.data.item import Item
-from todo_app.data.trello_items import *
+
 
 class ViewModel:
         def __init__(self,items):

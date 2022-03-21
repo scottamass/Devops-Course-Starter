@@ -63,3 +63,14 @@ go to the trello api docs to get your trello key and replace the place holders i
 bord id can been found in the address bar see exmaple below 
 ![Alt text](todo_app/readmeimages/screenshot.jpg "Optional title")
 go to the CONFIG.py file and update your bord varible with the board varible from trello board 
+
+
+## TESTING 
+unit tests have be added to this project for the following :
+
+# adding items to a doing list 
+# adding items to a done list 
+
+# adding items to a To-do list 
+
+to run all tests navigte to the project folder and run the command "pytest" to run all the tests 
