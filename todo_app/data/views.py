@@ -18,7 +18,7 @@ class ViewModel:
         def todo_items(self):
             todo_items =[]
             for item in self._items:
-                if item.list == "To-do":
+                if item.list == "To Do":
                     todo_items.append(item) 
             return todo_items
 

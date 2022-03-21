@@ -7,7 +7,7 @@
           <div class=" alert alert-warning" role="alert" style="-ms-flex-align: end;">
             {{item.list}}
           </div>
-              {% elif "To-do" in item.list %}
+              {% elif "To Do" in item.list %}
           <div class="alert alert-danger" role="alert" style="-ms-flex-align: end;">
                 {{item.list}}
           </div>
@@ -27,7 +27,7 @@
                 <form action="/complete/{{item.id}}" method="POST">
                   <button type="submit" class="btn btn-success">Done</button>
                 </form>
-              {% elif "To-do" in item.list %}
+              {% elif "To Do" in item.list %}
                 <form action="/doing/{{item.id}}" method="POST">
                   <button type="submit" class="btn btn-warning">Start</button>
                 </form>

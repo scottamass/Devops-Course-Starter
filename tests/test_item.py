@@ -10,7 +10,7 @@ def test_doing_items_methord_on_view_model_class():
     items = [
         Item("123","doing todo","Doing"),
         Item("122","done todo","Done",),
-        Item("121","todo todo","To-do")
+        Item("121","todo todo","To Do")
     ]
     View_mode = ViewModel(items)
 
@@ -24,7 +24,7 @@ def test_todo_items_methord_on_view_model_class():
     items = [
         Item("123","doing todo","Doing"),
         Item("122","done todo","Done",),
-        Item("121","todo todo","To-do")
+        Item("121","todo todo","To Do")
     ]
     View_mode = ViewModel(items)
 
@@ -38,7 +38,7 @@ def test_done_items_methord_on_view_model_class():
     items = [
         Item("123","doing todo","Doing"),
         Item("122","done todo","Done",),
-        Item("121","todo todo","To-do")
+        Item("121","todo todo","To Do")
     ]
     View_mode = ViewModel(items)
 

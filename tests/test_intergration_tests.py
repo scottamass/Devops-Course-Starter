@@ -31,8 +31,8 @@ def stub(url, params):
     if url == f'https://api.trello.com/1/boards/{test_board_id}/lists':
         fake_response_data = [{
             'id': '123abc',
-            'name': 'To Do',
-            'cards': [{'id': '456', 'name': 'Test card','list':'To-do','dateLastActivity':'01012022','due':'none'}]
+            'name': 'To-do',
+            'cards': [{'id': '456', 'name': 'Test card','dateLastActivity':'01012022','due':'none'}]
         }]
         return StubResponse(fake_response_data)
     if url == f'https://api.trello.com/1/members/me':
@@ -49,4 +49,5 @@ def test_index_page(monkeypatch, client):
     response = client.get('/')
 
     assert response.status_code == 200
+    
     assert 'Test card' in response.data.decode()

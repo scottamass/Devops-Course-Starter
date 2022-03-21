@@ -19,7 +19,7 @@ def get_list_id(name):
 
 
 def TODO_ID():
-    return get_list_id('To-do')
+    return get_list_id('To Do')
 
 def DOING_LISTID():
     return get_list_id('Doing')
