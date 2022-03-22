@@ -31,7 +31,7 @@ def stub(url, params):
     if url == f'https://api.trello.com/1/boards/{test_board_id}/lists':
         fake_response_data = [{
             'id': '123abc',
-            'name': 'To-do',
+            'name': 'To Do',
             'cards': [{'id': '456', 'name': 'Test card','dateLastActivity':'01012022','due':'none'}]
         }]
         return StubResponse(fake_response_data)
