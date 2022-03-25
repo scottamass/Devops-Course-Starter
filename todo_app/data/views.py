@@ -28,4 +28,6 @@ class ViewModel:
             for item in self._items:
                 if item.list == "Done":
                     done_items.append(item) 
-            return done_items        
+            return done_items       
+
+         

@@ -10,12 +10,14 @@
             "request": "launch",
             "module": "flask",
             "env": {
-                "FLASK_APP": "todo_app/app",
-                "FLASK_ENV": "development"
+                "FLASK_APP": "app.create_app",
+                "FLASK_ENV": "development",
+                "FLASK_DEBUG" : "0"
             },
             "args": [
                 "run",
-                "--no-debugger"
+                "--no-debugger",
+                "--no-reload"
             ],
             "jinja": true,
             "justMyCode": true
