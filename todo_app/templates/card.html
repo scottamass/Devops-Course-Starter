@@ -1,0 +1,40 @@
+<div class="card " style="min-width: 18rem; margin-top: 1rem;">
+    <!-- top of card -->
+    <div class="card-body bg-{{box_colour}}">
+      <div class="flex" style="justify-content: space-between;">
+         <h5 class="card-title">{{item.name}}</h5>
+                    {% if "Doing" in item.list %}  
+          <div class=" alert alert-warning" role="alert" style="-ms-flex-align: end;">
+            {{item.list}}
+          </div>
+              {% elif "To Do" in item.list %}
+          <div class="alert alert-danger" role="alert" style="-ms-flex-align: end;">
+                {{item.list}}
+          </div>
+              {% else %}
+              <div class="alert alert-success" role="alert" style="-ms-flex-align: end;">
+                {{item.list}}
+              </div>
+            {% endif %}    
+            </div>
+            
+          </div>
+          <!-- bottom of card -->
+          <div class="flex"  style="justify-content: space-between;  padding-left: 1em;padding-right: 1em;">
+            <p>Due Date: {{item.due}} </p>
+            <div class="buttons flex">
+              {% if "Doing" in item.list %}  
+                <form action="/complete/{{item.id}}" method="POST">
+                  <button type="submit" class="btn btn-success">Done</button>
+                </form>
+              {% elif "To Do" in item.list %}
+                <form action="/doing/{{item.id}}" method="POST">
+                  <button type="submit" class="btn btn-warning">Start</button>
+                </form>
+              {% endif %}    
+                <form action="/delete/{{item.id}}" method="POST">
+                  <button type="submit" class="btn btn-danger" style="margin-left: .5em;" >DELETE</button>
+                </form>
+            </div>
+          </div> 
+  </div>
