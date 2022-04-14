@@ -37,6 +37,7 @@ def create_app():
                         due_day=preprocessed_date[0:2]
                         due_year= preprocessed_date[5:10]
                         total=(f'{due_month}/{due_day}{due_year}')
+#                        print(preprocessed_date)
                         due_date=total
                 if request.form.get('due_date') == "":
                         
