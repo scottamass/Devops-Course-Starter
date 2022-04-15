@@ -1,0 +1,63 @@
+---
+- name: install todo app
+  hosts: webserver
+  remote_user: ec2-user
+  environment:
+    PATH: /home/ec2-user/.local/bin/:{{ ansible_env.PATH }}
+  vars_files:
+    - vault.yml
+  
+
+  tasks:
+  - name: Install Git
+    become: yes
+    yum:
+      name: git
+      state: present
+      update_cache: yes
+       
+  - name: Install Python
+    become: yes
+    yum:
+      name: python3
+      state: present
+
+  - name: Install Poetry 
+    ansible.builtin.shell: curl -sSL https://install.python-poetry.org | python3 
+    args:
+      creates: /home/ec2-user/.local/bin/poetry     
+  - name: create directory
+    become: yes
+    file:
+      path: /opt/todoapp
+      state: directory
+      mode: "u=rwx,g=rwx,o=rwx"
+
+  - name: Clone git repo
+    git:
+      repo: https://github.com/scottamass/Devops-Course-Starter.git
+      dest: /opt/todoapp
+      version: Module-4
+      
+  - name: Run Poetry Install
+    ansible.builtin.shell: poetry install
+    args:
+      chdir: /opt/todoapp
+
+  - name: create template
+    template:
+      src: ~/.env.j2
+      dest: /opt/todoapp/.env    
+
+  - name: copy todoapp start files 
+    become: yes
+    ansible.builtin.copy:
+      src: /opt/todoapp/todoapp.service
+      dest: /etc/systemd/system/todoapp.service    
+      remote_src: yes
+  - name: start webapp 
+    become: yes
+    ansible.builtin.systemd:
+      state: restarted
+      daemon_reload: true    
+      name: todoapp
