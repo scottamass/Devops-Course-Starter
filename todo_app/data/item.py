@@ -4,7 +4,10 @@ class Item:
         self.name = name
         self.list = list
         self.dayLastActivity = dateLastActivity
-        self.due = due
+        if due == None:
+            self.due = due
+        else:
+            self.due= due[8:10]+"-"+due[5:7]+"-"+due[0:4]    
         
             
         
