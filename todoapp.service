@@ -3,5 +3,5 @@ Description=My To-Do App
 [Service]
 User=ec2-user
 WorkingDirectory=/opt/todoapp
-EnviromentFile=/opt/todoapp/.env
+EnvironmentFile=/opt/todoapp/.env
 ExecStart= /home/ec2-user/.local/bin/gunicorn --workers 2 --bind 0.0.0.0:8000
