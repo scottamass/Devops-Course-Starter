@@ -55,9 +55,20 @@
       src: /opt/todoapp/todoapp.service
       dest: /etc/systemd/system/todoapp.service    
       remote_src: yes
+  
+  - name: set up socket for port 80 
+    become: yes
+    ansible.builtin.copy:
+      src: /opt/todoapp/todoapp.socket
+      dest: /etc/systemd/system/todoapp.socket    
+      remote_src: yes
+  
   - name: start webapp 
     become: yes
     ansible.builtin.systemd:
       state: restarted
       daemon_reload: true    
       name: todoapp
+
+  
+
