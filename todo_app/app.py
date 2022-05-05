@@ -7,6 +7,8 @@ from todo_app.data.views import ViewModel
 
 
 
+
+
 from todo_app.flask_config import Config
 
 def create_app():
@@ -23,6 +25,9 @@ def create_app():
                 item_view_model=ViewModel(items)
         
                 name = get_username()
+                
+              #
+                
                 return render_template('index.html', view_items=item_view_model, name=name)
 
         @app.route('/submit', methods=['POST'] )
@@ -37,6 +42,7 @@ def create_app():
                         due_day=preprocessed_date[0:2]
                         due_year= preprocessed_date[5:10]
                         total=(f'{due_month}/{due_day}{due_year}')
+#                        print(preprocessed_date)
                         due_date=total
                 if request.form.get('due_date') == "":
                         
