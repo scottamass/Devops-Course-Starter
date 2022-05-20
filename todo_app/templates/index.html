@@ -51,6 +51,8 @@
       {% include 'card.html'%}
       {% endfor %}    
     </div>
+
+    {% if view_items.done_items|length <=5 %}
     <div class="col-lg-4 order-lg-3" >
       {% for item in view_items.done_items%}
       
@@ -58,7 +60,24 @@
       {% include 'card.html'%}
       {% endfor %}    
     </div>
-    
+    {% else %}
+    <div class="col-lg-4 order-lg-3" >
+      {% for item in view_items.recently_done_items %}
+      
+        
+      {% include 'card.html'%}
+      {% endfor %}  
+      <details>
+      <summary>Older Items</summary>  
+      {% for item in view_items.old_done_items %}
+      
+        
+      {% include 'card.html'%}
+      {% endfor %}
+      </details>
+    </div>
+
+    {% endif %}
   </div>
 </div>
 {% endblock %}

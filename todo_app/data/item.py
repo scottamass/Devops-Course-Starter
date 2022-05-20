@@ -1,9 +1,11 @@
+from datetime import datetime
+
 class Item: 
-    def __init__(self, id, name,list, dateLastActivity = None,due = None): 
+    def __init__(self, id, name,list, dateLastActivity = datetime.today(),due = None): 
         self.id = id 
         self.name = name
         self.list = list
-        self.dayLastActivity = dateLastActivity
+        self.dateLastActivity = dateLastActivity
         if due == None:
             self.due = due
         else:
@@ -13,4 +15,4 @@ class Item:
         
     @classmethod 
     def from_trello_card(cls, card,list): 
-        return cls(card['id'], card['name'],list['name'], card['dateLastActivity'],card['due'] ) 
+        return cls(card['id'], card['name'],list['name'],card['dateLastActivity'], card['due'] ) 
