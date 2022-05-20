@@ -74,3 +74,13 @@ unit tests have be added to this project for the following :
 # adding items to a To-do list 
 
 to run all tests navigte to the project folder and run the command "pytest" to run all the tests 
+
+
+DOCKER CONTAINERS 
+A Docker container has been added to to the projecy to build the container run 
+docker build --tag todo-app .
+
+
+and to run the conainer 
+docker run  --env-file .env -p 80:8000 todo-app
+before running you will need to create a .env in your prject directory to pass in using the .env.template as a guide 
