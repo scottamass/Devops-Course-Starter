@@ -1,5 +1,6 @@
 
 
+
 from flask import Flask ,render_template, request,redirect, url_for
 from todo_app.data.CONFIG import *
 from todo_app.data.trello_items import get_trello_items, get_username , add_trello_item, delete_trello_item,set_item_to_done,set_item_to_doing
@@ -23,7 +24,8 @@ def create_app():
                 items = get_trello_items()
         
                 item_view_model=ViewModel(items)
-        
+
+                
                 name = get_username()
                 
               #
