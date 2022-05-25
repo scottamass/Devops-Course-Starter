@@ -24,13 +24,14 @@ def create_app():
                 items = get_trello_items()
         
                 item_view_model=ViewModel(items)
-
+                DEV=os.getenv("DEV")
+                
                 
                 name = get_username()
                 
-              #
+              
                 
-                return render_template('index.html', view_items=item_view_model, name=name)
+                return render_template('index.html', view_items=item_view_model, name=name, env=DEV)
 
         @app.route('/submit', methods=['POST'] )
         def submit():

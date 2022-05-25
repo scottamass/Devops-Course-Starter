@@ -22,7 +22,7 @@ ENTRYPOINT ["poetry", "run"]
 
 CMD ["gunicorn"  , "-b", "0.0.0.0:8000", "todo_app.app:create_app()"]
 
-#to-run: docker run  --env-file .env  -p 80:8000 todo-app:prod
+#to-run: docker run -e DEV=0  --env-file .env  -p 80:8000 todo-app:prod
 
 FROM build as dev
 
@@ -31,5 +31,5 @@ ENTRYPOINT ["poetry", "run"]
 CMD ["flask", "run","--host=0.0.0.0"]
 
 
-#to-run docker run --env-file .env -p 5000:5000 --mount type=bind,source="$(pwd)"/todo_app,target=/opt/todoapp/todo_app todo-app:dev
+#to-run docker run -e DEV=1 --env-file .env -p 5000:5000 --mount type=bind,source="$(pwd)"/todo_app,target=/opt/todoapp/todo_app todo-app:dev
  
