@@ -4,12 +4,36 @@
 {% block content %}
 <div class="container">  
   {% if env == "1" %}
-  <div class="card">
-    <div class="card-body">
-    <h2>THIS IS A DEV ENVIRONMENT</h2>
+  
+  
+    <div class="envdata">
+    <h2>DEV ENVIRONMENT</h2>
+    
+    <STYLE>
+   
+   .envdata{
+  z-index: 1021;
+  background-color:red;
+  position: fixed;
+  width: 10vw;
+  overflow:hidden;
+  top:0;
+  left: 0%;
+  transform: rotate(315deg);
+  text-align: center;
+  font-size:1vw;
+  color:white;
+  text-transform: uppercase;
+  font-family: Tahoma, Verdana, sans-serif;
+  box-shadow: 12px 10px 6px grey;
+  padding: 0px 0px 5px 0px;
+  
+}
+    
+    </STYLE>
     
  
-    </div>
+    
   </div>
   {% endif %}
 <div class="card">
@@ -19,8 +43,9 @@
  
     </div>
   </div>
-
-<div class= "card form sticky-top" style="padding-top: 1em; margin-top:1em ;">
+</div>
+<div class="container-fluid sticky-top">
+<div class= "card form " style="padding-top: 1em; margin-top:1em ;">
   <form action="/submit" method="POST">
     <input  type ='text' class="text-boxin" name="title" id="title" placeholder="So what would you like to do?" required></input>
     
@@ -41,6 +66,8 @@
 
   </div>
   </form> 
+</div>
+</div>
 </div>
 </div>
 <div class="container-fluid">
