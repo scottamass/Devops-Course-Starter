@@ -1,0 +1,28 @@
+version: '3.9'
+services:
+  test-server:
+    container_name: DEV_SERVER 
+    build: 
+      context: .
+      target: dev
+    
+    ports: 
+      - "5000:5000"
+    volumes:
+      - ./todo_app:/opt/todoapp/todo_app
+    env_file:
+      - ./.env
+    environment: 
+      - DEV=1    
+
+  prod-server:
+    build: 
+      context: .
+      target: prod
+    ports:
+      - "80:8000"
+    environment: 
+      - DEV=0  
+    env_file:
+      - ./.env     
+
