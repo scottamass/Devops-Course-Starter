@@ -114,7 +114,21 @@
       
       <details>
           
-          <summary>Show Older Items</summary>  
+          <summary>Show Older Items
+            <style>
+              summary{
+  min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+  margin-top: 1em;
+  list-style-image: inherit;
+  padding-left: 1em;
+}
+            </style>
+          </summary>  
         
           {% for item in view_items.old_done_items %}
           

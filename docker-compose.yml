@@ -16,6 +16,7 @@ services:
       - DEV=1    
 
   prod-server:
+    container_name: PRODUCTION
     build: 
       context: .
       target: prod
