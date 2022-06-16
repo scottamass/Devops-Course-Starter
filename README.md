@@ -74,3 +74,18 @@ unit tests have be added to this project for the following :
 # adding items to a To-do list 
 
 to run all tests navigte to the project folder and run the command "pytest" to run all the tests 
+
+
+DOCKER CONTAINERS 
+A Docker container has been added to to the projecy to build the container run 
+#to build a production container run 
+docker build --target prod --tag todo-app:prod .
+#to build a dev enviroment run 
+docker build --target dev --tag todo-app:dev .  
+
+and to run the conainer 
+prod:
+docker run -e DEV=0 --env-file .env  -p 80:8000 todo-app:prod
+Dev:
+docker run -e DEV=1 --env-file .env -p 5000:5000 --mount type=bind,source="$(pwd)"/todo_app,target=/opt/todoapp/todo_app todo-app:dev
+before running you will need to create a .env in your prject directory to pass in using the .env.template as a guide 

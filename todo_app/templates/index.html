@@ -3,6 +3,47 @@
 
 {% block content %}
 <div class="container">  
+  {% if env == "1" %}
+  
+  
+    <div class="envdata">
+    <h2>DEV</h2>
+    
+    <STYLE>
+   
+
+   .envdata{
+  z-index: 1021;
+  background-color:red;
+  position: fixed;
+  width: 20%;
+  overflow:hidden;
+  top:23px;
+  left: -70px; 
+  transform: rotate(315deg);
+  text-align: center;
+  font-size:1vw;
+  color:white;
+  text-transform: uppercase;
+  font-family: Tahoma, Verdana, sans-serif;
+  box-shadow: 12px 10px 6px grey;
+  padding: 0px 30px 5px 30px;
+   }
+  @media only screen and (max-width:414px){
+   .envdata{
+    top:10px;
+    left: -49px;
+    width: 50%;
+  }}
+  
+
+    
+    </STYLE>
+    
+ 
+    
+  </div>
+  {% endif %}
 <div class="card">
     <div class="card-body">
     <h2>Hello {{name['fullName']}}</h2>
@@ -10,8 +51,9 @@
  
     </div>
   </div>
-
-<div class= "card form sticky-top" style="padding-top: 1em; margin-top:1em ;">
+</div>
+<div class="container-fluid sticky-top">
+<div class= "card form " style="padding-top: 1em; margin-top:1em ;">
   <form action="/submit" method="POST">
     <input  type ='text' class="text-boxin" name="title" id="title" placeholder="So what would you like to do?" required></input>
     
@@ -34,6 +76,8 @@
   </form> 
 </div>
 </div>
+</div>
+</div>
 <div class="container-fluid">
   <div class="row">
     
@@ -51,6 +95,8 @@
       {% include 'card.html'%}
       {% endfor %}    
     </div>
+
+    {% if view_items.done_items|length <=5 %}
     <div class="col-lg-4 order-lg-3" >
       {% for item in view_items.done_items%}
       
@@ -58,7 +104,41 @@
       {% include 'card.html'%}
       {% endfor %}    
     </div>
-    
+    {% else %}
+    <div class="col-lg-4 order-lg-3" >
+      {% for item in view_items.recently_done_items %}
+      
+        
+      {% include 'card.html'%}
+      {% endfor %}  
+      
+      <details>
+          
+          <summary>Show Older Items
+            <style>
+              summary{
+  min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+  margin-top: 1em;
+  list-style-image: inherit;
+  padding-left: 1em;
+}
+            </style>
+          </summary>  
+        
+          {% for item in view_items.old_done_items %}
+          
+          
+          {% include 'card.html'%}
+          {% endfor %}
+        </details>
+    </div>
+
+    {% endif %}
   </div>
 </div>
 {% endblock %}
