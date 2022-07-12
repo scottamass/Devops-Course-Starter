@@ -27,3 +27,10 @@ services:
     env_file:
       - ./.env     
 
+  test:
+    container_name: test
+    build:
+      target: test
+    env_file:
+      - ./.env.test      
+
