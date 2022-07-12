@@ -31,5 +31,12 @@ ENTRYPOINT ["poetry", "run"]
 CMD ["flask", "run","--host=0.0.0.0"]
 
 
+
+
+
 #to-run docker run -e DEV=1 --env-file .env -p 5000:5000 --mount type=bind,source="$(pwd)"/todo_app,target=/opt/todoapp/todo_app todo-app:dev
  
+FROM  build as test
+COPY todo_app/ /opt/todoapp/todo_app
+COPY tests/ /opt/todoapp/tests
+CMD ["poetry", "run","pytest"]
