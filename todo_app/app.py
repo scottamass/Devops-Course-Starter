@@ -20,7 +20,7 @@ def create_app():
 
         @app.route('/')
         def index():
-
+                
                 items = get_trello_items()
         
                 item_view_model=ViewModel(items)
