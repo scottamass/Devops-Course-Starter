@@ -13,4 +13,4 @@ jobs:
     name: Deploy 
     needs: build
     steps:
-      run: echo "Publishing!"
+    - run: echo "Publishing!"
