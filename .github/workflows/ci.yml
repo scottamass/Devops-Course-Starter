@@ -15,7 +15,9 @@ jobs:
     needs: build
     steps:    
     - uses: actions/checkout@v2
-    - run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{secrets.DOCKERPASSWORD}}
+    - run: docker login
+    - run: ${{ secrets.DOCKERHUB_USERNAME }} 
+    - run: ${{secrets.DOCKERPASSWORD}}
     - run: docker build --target prod --tag scottamass/prod:latest .
     - run: docker push scottamass/prod:latest
     - run: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
