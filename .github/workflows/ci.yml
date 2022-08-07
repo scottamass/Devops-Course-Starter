@@ -14,12 +14,14 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:    
-    - uses: actions/checkout@v2
+    
     - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - uses: docker/login-action@v2
+    - with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: building image 
+    - uses: actions/checkout@v2      
     - run: docker build --target prod --tag scottamass/prod:latest .
     - run: docker push scottamass/prod:latest
     - run: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
