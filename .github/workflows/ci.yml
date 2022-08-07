@@ -14,23 +14,17 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-    - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-        
-          
     - name: build docker image 
-      step:
-      - uses: actions/checkout@v2
-      - run: docker build --target prod --tag scottamass/prod:latest .
-      - run: docker push scottamass/prod:latest
-      - run: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
-      - name: build and push
-        env:
-            HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}} 
-        run: | 
+    
+    - uses: actions/checkout@v2
+    - run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{secrets.DOCKERPASSWORD}}
+    - run: docker build --target prod --tag scottamass/prod:latest .
+    - run: docker push scottamass/prod:latest
+    - run: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
+    - name: build and push
+      env:
+          HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}} 
+      run: | 
           heroku container:login 
           docker tag scottamass/prod:latest registry.heroku.com/devops-todo/web
           docker push registry.heroku.com/devops-todo/web
