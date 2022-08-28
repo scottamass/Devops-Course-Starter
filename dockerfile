@@ -18,9 +18,9 @@ FROM build AS prod
 RUN poetry install
 COPY todo_app/ /opt/todoapp/todo_app
 
-ENTRYPOINT ["poetry", "run"]
+#ENTRYPOINT ["poetry", "run"]
 
-CMD ["gunicorn"  , "-b", "0.0.0.0:8000", "todo_app.app:create_app()"]
+CMD poetry run gunicorn "todo_app.app:create_app()" "--bind 0.0.0.0:{$PORT:-8000}"
 
 #to-run: docker run -e DEV=0  --env-file .env  -p 80:8000 todo-app:prod
 
@@ -31,5 +31,15 @@ ENTRYPOINT ["poetry", "run"]
 CMD ["flask", "run","--host=0.0.0.0"]
 
 
+
+
+
 #to-run docker run -e DEV=1 --env-file .env -p 5000:5000 --mount type=bind,source="$(pwd)"/todo_app,target=/opt/todoapp/todo_app todo-app:dev
  
+FROM  build as test
+RUN poetry install
+COPY todo_app/ /opt/todoapp/todo_app
+COPY tests/ /opt/todoapp/tests
+CMD ["poetry", "run","pytest"]
+
+#to-run: docker run -e DEV=0  --env-file .env.test  -p 80:8000 todo-app:test

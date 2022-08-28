@@ -89,3 +89,9 @@ docker run -e DEV=0 --env-file .env  -p 80:8000 todo-app:prod
 Dev:
 docker run -e DEV=1 --env-file .env -p 5000:5000 --mount type=bind,source="$(pwd)"/todo_app,target=/opt/todoapp/todo_app todo-app:dev
 before running you will need to create a .env in your prject directory to pass in using the .env.template as a guide 
+
+
+Deployment 
+
+the app is automaticly deployed to heroku on push 
+https://devops-todo.herokuapp.com/
