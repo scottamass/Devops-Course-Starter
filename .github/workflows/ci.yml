@@ -33,3 +33,4 @@ jobs:
               docker tag scottamass/prod:latest registry.heroku.com/devops-todo/web
               docker push registry.heroku.com/devops-todo/web
               heroku container:release web -a devops-todo
+              curl -dH -X POST ${{ secrets.WEBHOOK_URL }}
