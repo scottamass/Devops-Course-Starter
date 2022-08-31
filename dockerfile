@@ -2,9 +2,9 @@ FROM python:3.10-slim-bullseye AS build
 RUN apt-get update
 RUN apt-get install -y curl
 
-RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python -
 
-ENV PATH="${PATH}:/root/.poetry/bin"
+ENV PATH="${PATH}:/root/.local/bin"
 
 WORKDIR /opt/todoapp/
 COPY poetry.toml /opt/todoapp/
