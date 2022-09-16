@@ -2,9 +2,9 @@ FROM python:3.10-slim-bullseye AS build
 RUN apt-get update
 RUN apt-get install -y curl
 
-RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python -
 
-ENV PATH="${PATH}:/root/.poetry/bin"
+ENV PATH="${PATH}:/root/.local/bin"
 
 WORKDIR /opt/todoapp/
 COPY poetry.toml /opt/todoapp/
@@ -24,7 +24,7 @@ CMD poetry run gunicorn "todo_app.app:create_app()" "--bind 0.0.0.0:{$PORT:-8000
 
 #to-run: docker run -e DEV=0  --env-file .env  -p 80:8000 todo-app:prod
 
-FROM build as dev
+FROM build AS dev
 
 RUN poetry install
 ENTRYPOINT ["poetry", "run"]
@@ -36,7 +36,7 @@ CMD ["flask", "run","--host=0.0.0.0"]
 
 #to-run docker run -e DEV=1 --env-file .env -p 5000:5000 --mount type=bind,source="$(pwd)"/todo_app,target=/opt/todoapp/todo_app todo-app:dev
  
-FROM  build as test
+FROM build AS test
 RUN poetry install
 COPY todo_app/ /opt/todoapp/todo_app
 COPY tests/ /opt/todoapp/tests
