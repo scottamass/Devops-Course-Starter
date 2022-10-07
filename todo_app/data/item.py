@@ -6,13 +6,11 @@ class Item:
         self.name = name
         self.list = list
         self.dateLastActivity = dateLastActivity
-        if due == None:
-            self.due = due
-        else:
-            self.due= due[8:10]+"-"+due[5:7]+"-"+due[0:4]    
         
+        self.due = due
+       
             
         
     @classmethod 
-    def from_trello_card(cls, card,list): 
-        return cls(card['id'], card['name'],list['name'],card['dateLastActivity'], card['due'] ) 
+    def from_trello_card(cls, card): 
+        return cls(card['_id'], card['name'],card['status'],card['dateLastActivity'], card['due'] ) 
