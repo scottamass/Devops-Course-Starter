@@ -6,7 +6,7 @@ from todo_app.data.CONFIG import *
 from todo_app.data.trello_items import get_trello_items, get_username , add_trello_item, delete_trello_item,set_item_to_done,set_item_to_doing
 from todo_app.data.views import ViewModel
 from todo_app.data.mongo_items import add_items, get_items,mongo_start,mongo_done,mongo_delete
-from flask_login import LoginManager, UserMixin, current_user,login_required, login_user
+from flask_login import LoginManager, UserMixin, current_user,login_required, login_user,AnonymousUserMixin
 
 
 
@@ -18,19 +18,27 @@ class User(UserMixin):
 		self.id = id
 		self.is_reader = True
 		if id=="78789252":
-			self.is_writer=True
+			self.roles=['reader','writer']
 		else:
-			self.is_writer=False
+			self.roles=['reader']
 
 WRITER ='writer'
 READER= 'reader'
-
+class Anonymous(AnonymousUserMixin):
+	def __init__(self):
+		self.id = 1
+		self.roles=['reader','writer']
 
 def create_app():
 		app = Flask(__name__)
 		app.config.from_object(Config())
-		login_manager = LoginManager()
+		if os.getenv('LOGIN_DISABLED') is None:
+			app.config['LOGIN_DISABLED'] = False
+		else:
+			app.config['LOGIN_DISABLED'] = True
 
+		login_manager = LoginManager()
+		
 		@login_manager.unauthorized_handler
 		def unauthenticated():
 			red_url=f"https://github.com/login/oauth/authorize?client_id={os.getenv('GITHUB_CLIENT_ID')}"
@@ -40,13 +48,14 @@ def create_app():
 		def load_user(user_id):
 			return User(user_id)
 
-		login_manager.init_app(app)		
+		login_manager.init_app(app)	
+		login_manager.anonymous_user = Anonymous	
 
-
+		LOGIN_DISABLED = app.config['LOGIN_DISABLED']
 		@app.route('/')
 		@login_required
 		def index():
-			if current_user.is_reader:	
+			if (LOGIN_DISABLED or 'reader' in current_user.roles):	
 				#items = get_trello_items()
 				items = get_items()
 				item_view_model=ViewModel(items)
@@ -74,7 +83,7 @@ def create_app():
 		@app.route('/submit', methods=['POST'] )
 		@login_required
 		def submit():
-			if current_user.is_reader:
+			if (LOGIN_DISABLED or 'writer' in current_user.roles):
 				if request.method =='POST':
 					if current_user.is_writer:
 						title=request.form.get('title')
@@ -94,7 +103,7 @@ def create_app():
 		@app.route("/complete/<id>", methods=['POST'])
 		@login_required
 		def complete(id):
-			if current_user.is_writer:
+			if (LOGIN_DISABLED or 'writer' in current_user.roles):
 				mongo_done(id)
 				#set_item_to_done(id)
 				return redirect(url_for('index'))
@@ -104,7 +113,7 @@ def create_app():
 		@app.route("/doing/<id>", methods=['POST'])
 		@login_required
 		def doing(id):
-			if current_user.is_writer:
+			if (LOGIN_DISABLED or 'writer' in current_user.roles):
 				#set_item_to_doing(id)
 				mongo_start(id)
 				return redirect(url_for('index'))        
@@ -113,7 +122,7 @@ def create_app():
 		@app.route("/delete/<id>", methods=['POST'])
 		@login_required
 		def delete(id): 
-			if current_user.is_writer:	
+			if (LOGIN_DISABLED or 'writer' in current_user.roles):
 				#delete_trello_item(id) 
 				mongo_delete(id)
 				return redirect(url_for('index')) 
