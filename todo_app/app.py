@@ -65,7 +65,6 @@ def create_app():
 				return render_template('index.html', view_items=item_view_model,  env=DEV, user=current_user)
 		
 		@app.route('/login/callback')
-		@login_required
 		def callback():
 			auth_code = request.args['code']
 			print(auth_code)
