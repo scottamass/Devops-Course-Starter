@@ -6,7 +6,7 @@ from todo_app.data.CONFIG import *
 from todo_app.data.trello_items import get_trello_items, get_username , add_trello_item, delete_trello_item,set_item_to_done,set_item_to_doing
 from todo_app.data.views import ViewModel
 from todo_app.data.mongo_items import add_items, get_items,mongo_start,mongo_done,mongo_delete
-from flask_login import LoginManager, UserMixin, current_user,login_required, login_user,AnonymousUserMixin
+from flask_login import LoginManager, UserMixin, current_user,login_required, login_user,AnonymousUserMixin,logout_user
 
 
 
@@ -17,6 +17,7 @@ class User(UserMixin):
 	def __init__(self,id):
 		self.id = id
 		self.is_reader = True
+		#78789252
 		if id=="78789252":
 			self.roles=['reader','writer']
 		else:
@@ -61,12 +62,13 @@ def create_app():
 				item_view_model=ViewModel(items)
 				DEV=os.getenv("DEV")
 				print(current_user.id)
-				return render_template('index.html', view_items=item_view_model,  env=DEV)
+				return render_template('index.html', view_items=item_view_model,  env=DEV, user=current_user)
 		
 		@app.route('/login/callback')
 		@login_required
 		def callback():
 			auth_code = request.args['code']
+			print(auth_code)
 			access_toker_url="https://github.com/login/oauth/access_token"
 			q_params={"client_id":os.getenv('GITHUB_CLIENT_ID'),"client_secret":os.getenv('GITHUB_SECRET_ID'),"code":auth_code}
 			headers={"Accept":"application/json"}
@@ -79,7 +81,10 @@ def create_app():
 			user =User(user_id)
 			login_user(user)
 			return redirect('/')
-
+		@app.route('/logout')
+		def logout():
+			logout_user()
+			return "loged out"	
 		@app.route('/submit', methods=['POST'] )
 		@login_required
 		def submit():
