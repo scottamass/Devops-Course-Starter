@@ -1,7 +1,6 @@
 from datetime import date, datetime
 
-#today = date.today().strftime('%d-%m-%Y')
-#print (today)
+
 class ViewModel:
         def __init__(self,items):
             self._items =items    
@@ -38,7 +37,7 @@ class ViewModel:
         def recently_done_items(self):
             recently_done_items = []
             today = date.today().strftime('%d-%m-%Y')
-            print(today)
+            
             for item in self._items:
                 if item.list == "Done" and item.dateLastActivity[0:10] == today :
                     recently_done_items.append(item)
