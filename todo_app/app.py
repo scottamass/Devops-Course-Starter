@@ -115,7 +115,7 @@ def create_app():
 			user_name=user_info_response.json()['login']
 			print(user_name)
 			user_id=user_info_response.json()['id']
-			user =User(user_name,user_id,'reader')
+			user =User(user_name,user_id,['reader'])
 			login_user(user)
 			add_user_to_db(current_user)
 			
