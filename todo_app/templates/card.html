@@ -24,18 +24,20 @@
             <p>{{item.dateLastActivity[0:10]}}</p>
             <p>Due Date: {{item.due}} </p>
             <div class="buttons flex">
-              {% if "Doing" in item.list %}  
-                <form action="/complete/{{item.id}}" method="POST">
-                  <button type="submit" class="btn btn-success">Done</button>
-                </form>
-              {% elif "To Do" in item.list %}
-                <form action="/doing/{{item.id}}" method="POST">
-                  <button type="submit" class="btn btn-warning">Start</button>
-                </form>
+              {% if 'writer' in user.roles %}
+                {% if "Doing" in item.list %}  
+                  <form action="/complete/{{item.id}}" method="POST">
+                    <button type="submit" class="btn btn-success">Done</button>
+                  </form>
+                {% elif "To Do" in item.list %}
+                  <form action="/doing/{{item.id}}" method="POST">
+                    <button type="submit" class="btn btn-warning">Start</button>
+                  </form>
+                {% endif %}    
+                  <form action="/delete/{{item.id}}" method="POST">
+                    <button type="submit" class="btn btn-danger" style="margin-left: .5em;" >DELETE</button>
+                  </form>
               {% endif %}    
-                <form action="/delete/{{item.id}}" method="POST">
-                  <button type="submit" class="btn btn-danger" style="margin-left: .5em;" >DELETE</button>
-                </form>
             </div>
           </div> 
   </div>
