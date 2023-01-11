@@ -120,3 +120,10 @@ env/
 .env
 
 notes.md
+
+
+**./terraform/*
+
+*.tfstate
+*.tfstate*
+
