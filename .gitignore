@@ -127,3 +127,4 @@ notes.md
 *.tfstate
 *.tfstate*
 
+.terraform/providers/registry.terraform.io/hashicorp/azurerm/3.38.0/windows_386/terraform-provider-azurerm_v3.38.0_x5.exe
