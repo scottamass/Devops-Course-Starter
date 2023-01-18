@@ -8,12 +8,15 @@ from todo_app.data.trello_items import get_trello_items, get_username , add_trel
 from todo_app.data.views import ViewModel
 from todo_app.data.mongo_items import add_items, get_items, make_admin, make_writer,mongo_start,mongo_done,mongo_delete,add_user_to_db,load_user_from_db, user_list_create,make_admin,ban_user
 from flask_login import LoginManager, UserMixin, current_user,login_required, login_user,AnonymousUserMixin,logout_user
+import logging
 
 
 
 
 
 from todo_app.flask_config import Config
+
+
 class User(UserMixin):
 	def __init__(self,name,id,roles):
 		self.name =name
@@ -35,6 +38,9 @@ class Anonymous(AnonymousUserMixin):
 def create_app():
 		app = Flask(__name__)
 		app.config.from_object(Config())
+		if current_user==None:
+			app.logger.warning("Anonymous user accessing db" )
+		
 		if os.getenv('LOGIN_DISABLED') is None:
 			app.config['LOGIN_DISABLED'] = False
 		else:
