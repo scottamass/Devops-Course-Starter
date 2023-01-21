@@ -122,26 +122,30 @@ def create_app():
 		
 		@app.route('/login/callback')
 		def callback():
-			auth_code = request.args['code']
-			#print(auth_code)
-			access_toker_url="https://github.com/login/oauth/access_token"
-			q_params={"client_id":os.getenv('GITHUB_CLIENT_ID'),"client_secret":os.getenv('GITHUB_SECRET_ID'),"code":auth_code}
-			headers={"Accept":"application/json"}
-			response= requests.post(access_toker_url, params=q_params,headers=headers)
-			access_token = response.json()['access_token']
-			user_info_url = "https://api.github.com/user"
-			auth_header = {'Authorization':f'Bearer {access_token}'}
-			user_info_response = requests.get(user_info_url,headers=auth_header)
-			user_name=user_info_response.json()['login']
-			print(user_name)
-			user_id=user_info_response.json()['id']
-			user =User(user_name,user_id,['reader'])
-			login_user(user)
-			add_user_to_db(current_user)
-			app.logger.info(f"user: {current_user.name} with id: {current_user.id} logged in from {request.remote_addr} " )
-			
-			
-			return redirect('/')
+			try:
+				auth_code = request.args['code']
+				#print(auth_code)
+				access_toker_url="https://github.com/login/oauth/access_token"
+				q_params={"client_id":os.getenv('GITHUB_CLIENT_ID'),"client_secret":os.getenv('GITHUB_SECRET_ID'),"code":auth_code}
+				headers={"Accept":"application/json"}
+				response= requests.post(access_toker_url, params=q_params,headers=headers)
+				access_token = response.json()['access_token']
+				user_info_url = "https://api.github.com/user"
+				auth_header = {'Authorization':f'Bearer {access_token}'}
+				user_info_response = requests.get(user_info_url,headers=auth_header)
+				user_name=user_info_response.json()['login']
+				print(user_name)
+				user_id=user_info_response.json()['id']
+				user =User(user_name,user_id,['reader'])
+				login_user(user)
+				add_user_to_db(current_user)
+				app.logger.info(f"user: {current_user.name} with id: {current_user.id} logged in from {request.remote_addr} " )
+				
+				
+				return redirect('/')
+			except Exception as e:
+				app.logger.critical(f"ERROR LOGGING IN {e} " )	
+				return "error logging in please try again"
 		@app.route('/logout')
 		def logout():
 			logout_user()
