@@ -68,7 +68,7 @@ resource "azurerm_cosmosdb_account" "main" {
   }
 
 
-}
+
 resource "azurerm_cosmosdb_mongo_database" "main" {
   name                = "terramongodb"
   resource_group_name = data.azurerm_cosmosdb_account.main.resource_group_name
@@ -94,4 +94,5 @@ app_settings={
     "GITHUB_CLIENT_ID" = var.GITHUB_CLIENT_ID
     "GITHUB_SECRET_ID" =var.GITHUB_SECRET_ID
     "LOGIN_DISABLED" = "false"
+}
 }
