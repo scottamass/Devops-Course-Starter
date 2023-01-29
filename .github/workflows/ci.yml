@@ -40,7 +40,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: terraform init -input=false
-    - run: terraform apply -var 'prefix=test' -var 'GITHUB_CLIENT_ID=${{secrets.GIT_HUB_CLIENT_ID}}' -var 'GITHUB_SECRET=${{secrets.GIT_HUB_SECRET}}' -auto-approve
+    - run: terraform apply -var 'prefix=test' -var 'GITHUB_CLIENT_ID=${{secrets.GIT_HUB_CLIENT_ID}}' -var 'GITHUB_SECRET=${{secrets.GIT_HUB_SECRET_ID}}' -auto-approve
     - run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
     - run: docker build --target prod --tag scottamass/prod:latest .
     - run: docker push scottamass/prod:latest
