@@ -44,7 +44,7 @@ resource "azurerm_linux_web_app" "main" {
     "FLASK_APP"                  = "todo_app/app"
     "FLASK_ENV"                  = "production"
     "LOG_LEVEL"                  = "DEBUG"
-    "SECRET_KEY"                 = "1234567"
+    "SECRET_KEY"                 = 1234567
     "GITHUB_CLIENT_ID"           = var.GITHUB_CLIENT_ID
     "GITHUB_SECRET_ID"           = var.GITHUB_SECRET_ID
     "LOGIN_DISABLED"             = "false"
