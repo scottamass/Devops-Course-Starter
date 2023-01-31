@@ -48,7 +48,7 @@ resource "azurerm_linux_web_app" "main" {
     "SECRET_KEY"                 = 1234567
     "GITHUB_CLIENT_ID"           = var.GITHUB_CLIENT_ID
     "GITHUB_SECRET_ID"           = var.GITHUB_SECRET_ID
-    "LOGIN_DISABLED"             = False
+    
   }
 }
 
