@@ -41,6 +41,7 @@ resource "azurerm_linux_web_app" "main" {
   app_settings = {
     "DOCKER_REGISTRY_SERVER_URL" = var.DOCKER_REGISTRY_SERVER_URL
     "MONGODB_CONNECTION_STRING"  = azurerm_cosmosdb_account.main.connection_strings[0]
+    "MONGO_DATABASE_NAME"       = "testDb"
     "FLASK_APP"                  = "todo_app/app"
     "FLASK_ENV"                  = "production"
     "LOG_LEVEL"                  = "DEBUG"
