@@ -8,12 +8,22 @@ from todo_app.data.trello_items import get_trello_items, get_username , add_trel
 from todo_app.data.views import ViewModel
 from todo_app.data.mongo_items import add_items, get_items, make_admin, make_writer,mongo_start,mongo_done,mongo_delete,add_user_to_db,load_user_from_db, user_list_create,make_admin,ban_user
 from flask_login import LoginManager, UserMixin, current_user,login_required, login_user,AnonymousUserMixin,logout_user
+import logging,platform
+from loggly.handlers import HTTPSHandler
+from logging import Formatter, getLogger
+
+FORMAT='%(levelname)s %(asctime)s %(message)s'
+logging.basicConfig(format=FORMAT,level=logging.DEBUG)
+
+
 
 
 
 
 
 from todo_app.flask_config import Config
+
+
 class User(UserMixin):
 	def __init__(self,name,id,roles):
 		self.name =name
@@ -35,6 +45,15 @@ class Anonymous(AnonymousUserMixin):
 def create_app():
 		app = Flask(__name__)
 		app.config.from_object(Config())
+		app.logger.setLevel(app.config['LOG_LEVEL'])
+		if app.config['LOGGLY_TOKEN'] is not None:
+			handler = HTTPSHandler(f'https://logs-01.loggly.com/inputs/{app.config["LOGGLY_TOKEN"]}/tag/todo-app')
+			getLogger('werkzeug').addHandler(HTTPSHandler(f'https://logs-01.loggly.com/inputs/{app.config["LOGGLY_TOKEN"]}/tag/todo-app-requests'))
+			handler.setFormatter(
+				Formatter("[%(asctime)s] %(levelname)s in %(module)s: %(message)s")
+			)
+			app.logger.addHandler(handler)	
+		
 		if os.getenv('LOGIN_DISABLED') is None:
 			app.config['LOGIN_DISABLED'] = False
 		else:
@@ -95,6 +114,7 @@ def create_app():
 			
 			if (LOGIN_DISABLED or 'reader' in current_user.roles):	
 				#items = get_trello_items()
+				#app.logger.warning("%s %s accessing db", current_user.name,current_user.id )
 				items = get_items()
 				item_view_model=ViewModel(items)
 				DEV=os.getenv("DEV")
@@ -102,25 +122,30 @@ def create_app():
 		
 		@app.route('/login/callback')
 		def callback():
-			auth_code = request.args['code']
-			#print(auth_code)
-			access_toker_url="https://github.com/login/oauth/access_token"
-			q_params={"client_id":os.getenv('GITHUB_CLIENT_ID'),"client_secret":os.getenv('GITHUB_SECRET_ID'),"code":auth_code}
-			headers={"Accept":"application/json"}
-			response= requests.post(access_toker_url, params=q_params,headers=headers)
-			access_token = response.json()['access_token']
-			user_info_url = "https://api.github.com/user"
-			auth_header = {'Authorization':f'Bearer {access_token}'}
-			user_info_response = requests.get(user_info_url,headers=auth_header)
-			user_name=user_info_response.json()['login']
-			print(user_name)
-			user_id=user_info_response.json()['id']
-			user =User(user_name,user_id,['reader'])
-			login_user(user)
-			add_user_to_db(current_user)
-			
-			
-			return redirect('/')
+			try:
+				auth_code = request.args['code']
+				#print(auth_code)
+				access_toker_url="https://github.com/login/oauth/access_token"
+				q_params={"client_id":os.getenv('GITHUB_CLIENT_ID'),"client_secret":os.getenv('GITHUB_SECRET_ID'),"code":auth_code}
+				headers={"Accept":"application/json"}
+				response= requests.post(access_toker_url, params=q_params,headers=headers)
+				access_token = response.json()['access_token']
+				user_info_url = "https://api.github.com/user"
+				auth_header = {'Authorization':f'Bearer {access_token}'}
+				user_info_response = requests.get(user_info_url,headers=auth_header)
+				user_name=user_info_response.json()['login']
+				print(user_name)
+				user_id=user_info_response.json()['id']
+				user =User(user_name,user_id,['reader'])
+				login_user(user)
+				add_user_to_db(current_user)
+				app.logger.info(f"user: {current_user.name} with id: {current_user.id} logged in from {request.remote_addr} " )
+				
+				
+				return redirect('/')
+			except Exception as e:
+				app.logger.critical(f"ERROR LOGGING IN {e} " )	
+				return "error logging in please try again"
 		@app.route('/logout')
 		def logout():
 			logout_user()
@@ -179,6 +204,7 @@ def create_app():
 			if (LOGIN_DISABLED or 'writer' in current_user.roles):
 				#delete_trello_item(id) 
 				mongo_delete(id)
+				app.logger.info('%s %s %s has deleted an entry',current_user.name,current_user.id,request.remote_addr)
 				return redirect(url_for('index')) 
 			else:
 				return  "not authorised"	       
