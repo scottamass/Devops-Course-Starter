@@ -13,7 +13,7 @@ from loggly.handlers import HTTPSHandler
 from logging import Formatter, getLogger
 
 FORMAT='%(levelname)s %(asctime)s %(message)s'
-logging.basicConfig(format=FORMAT,level=logging.DEBUG)
+logging.basicConfig(format=FORMAT,level=logging.INFO)
 
 
 
@@ -111,15 +111,16 @@ def create_app():
 		@login_required
 		@banned
 		def index():
-			
-			if (LOGIN_DISABLED or 'reader' in current_user.roles):	
-				#items = get_trello_items()
-				#app.logger.warning("%s %s accessing db", current_user.name,current_user.id )
-				items = get_items()
-				item_view_model=ViewModel(items)
-				DEV=os.getenv("DEV")
-				return render_template('index.html', view_items=item_view_model,  env=DEV, user=current_user)
-		
+			try:
+				if (LOGIN_DISABLED or 'reader' in current_user.roles):	
+					#items = get_trello_items()
+					#app.logger.warning("%s %s accessing db", current_user.name,current_user.id )
+					items = get_items()
+					item_view_model=ViewModel(items)
+					DEV=os.getenv("DEV")
+					return render_template('index.html', view_items=item_view_model,  env=DEV, user=current_user)
+			except:
+				return 'There has been an Error Please try again'
 		@app.route('/login/callback')
 		def callback():
 			try:
@@ -144,7 +145,7 @@ def create_app():
 				
 				return redirect('/')
 			except Exception as e:
-				app.logger.critical(f"ERROR LOGGING IN {e} " )	
+				app.logger.error(f"ERROR LOGGING IN {e} " )	
 				return "error logging in please try again"
 		@app.route('/logout')
 		def logout():
