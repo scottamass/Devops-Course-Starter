@@ -111,7 +111,7 @@ def create_app():
 		@login_required
 		@banned
 		def index():
-			try:
+			
 				if (LOGIN_DISABLED or 'reader' in current_user.roles):	
 					#items = get_trello_items()
 					#app.logger.warning("%s %s accessing db", current_user.name,current_user.id )
@@ -119,8 +119,7 @@ def create_app():
 					item_view_model=ViewModel(items)
 					DEV=os.getenv("DEV")
 					return render_template('index.html', view_items=item_view_model,  env=DEV, user=current_user)
-			except:
-				return 'There has been an Error Please try again'
+
 		@app.route('/login/callback')
 		def callback():
 			try:

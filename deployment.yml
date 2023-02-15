@@ -32,7 +32,8 @@ spec:
           - name: SECRET_KEY
             value: "secret-key"
           - name: MONGO_CONNECTION_STRING
-            value: "mongodb://terracosmosacc:1y7wUK5fy2GQ1GNgjb7C81XSlqUUTBDPF5D3qaMpxejK89WnJeiuR55xj2xW4g7NSGZbii9dcPbeACDbLWBHxA==@terracosmosacc.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@terracosmosacc@"
+            #value: "mongodb://terracosmosacc:1y7wUK5fy2GQ1GNgjb7C81XSlqUUTBDPF5D3qaMpxejK89WnJeiuR55xj2xW4g7NSGZbii9dcPbeACDbLWBHxA==@terracosmosacc.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@terracosmosacc@"
+            value: "mongodb://192.168.65.2:27017"
           - name: MONGO_DATABASE_NAME
             value: "testDb"
           - name: GITHUB_SECRET_ID
