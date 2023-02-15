@@ -53,11 +53,8 @@ Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser
 
 
 
-### setting up with trello 
-please make sure you trello bord has the following lists 
-* "To-do"
-* "Doing"
-* "Done"
+
+
 
 go to the trello api docs to get your trello key and replace the place holders in the env template with your api and token key 
 bord id can been found in the address bar see exmaple below 
@@ -91,7 +88,20 @@ docker run -e DEV=1 --env-file .env -p 5000:5000 --mount type=bind,source="$(pwd
 before running you will need to create a .env in your prject directory to pass in using the .env.template as a guide 
 
 
-Deployment 
 
-the app is automaticly deployed to heroku on push 
-https://devops-todo.herokuapp.com/
+
+## Run Terraform locally
+Run "terraform init"
+
+The following variable will either need to be added using -var tag or in a .tfvars file:
+GIT_HUB_CLIENT_ID
+GIT_HUB_SECRET
+prefix
+
+See variables.tf for optional variables.
+
+Run "terraform apply"
+
+## Azure Link
+
+https://test-terratodoappkl.azurewebsites.net

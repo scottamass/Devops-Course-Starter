@@ -8,7 +8,7 @@ from bson.objectid import ObjectId
 
 
 def get_items():
-    
+    print(os.getenv("MONGO_CONNECTION_STRING"))
     db = pymongo.MongoClient(os.getenv("MONGO_CONNECTION_STRING"))
     map=db[os.getenv("MONGO_DATABASE_NAME")]
     todos=map.todo_items
