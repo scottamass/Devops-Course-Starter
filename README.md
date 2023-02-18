@@ -105,3 +105,35 @@ Run "terraform apply"
 ## Azure Link
 
 https://test-terratodoappkl.azurewebsites.net
+
+
+## Deploying via Kubenties via minikube 
+
+locate the "todo-secret.yml.template" and rename to "todo-secret.yml" and fill in the relevent details on the form 
+
+make sure docker is running and spin up the minikube server 
+
+```js
+minikube start
+```
+build a local image using docker with the command 
+```
+ddocker build --target prod --tag todo-app:prod .  
+```
+and apply the image
+```
+minikube image load <image_name>
+```
+apply your images 
+```
+kubectl apply -f deployment.yaml 
+kubectl apply -f todo-secrets.yaml 
+kubectl apply -f service.yaml
+```
+and run the port forwarder 
+
+```
+kubectl port-forward service/module-14 7080:80
+```
+
+you can now view the app on http://127.0.0.1:7080
