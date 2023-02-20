@@ -29,11 +29,7 @@ class User(UserMixin):
 		self.name =name
 		self.id = id
 		self.roles = roles
-# commented out but left in for evidence of module 11 parts 1 to 3 
-""" 		if id==78789252:
-			self.roles=['writer','reader']
-		else:
-			self.roles=['reader'] """
+
 
 WRITER ='writer'
 READER= 'reader'
@@ -100,8 +96,7 @@ def create_app():
 		def load_user(user_id):
 			u =load_user_from_db(user_id)
 			
-			#return User(user_id)
-			#return load_user_from_db(user_id)
+
 			return User(name=u['name'], id=u['id'], roles=u['roles'])
 		login_manager.init_app(app)	
 		login_manager.anonymous_user = Anonymous	
@@ -162,7 +157,7 @@ def create_app():
 		@login_required
 		@writer_required
 		def submit():
-			#if (LOGIN_DISABLED or 'writer' in current_user.roles):
+			
 				if request.method =='POST':
 					
 						title=request.form.get('title')
@@ -174,8 +169,7 @@ def create_app():
 						
 						add_items(title,preprocessed_date)
 						return redirect(url_for('index') )
-			#	else:
-			#		return  "not authorised"
+			
 
 
 
@@ -184,7 +178,7 @@ def create_app():
 		def complete(id):
 			if (LOGIN_DISABLED or 'writer' in current_user.roles):
 				mongo_done(id)
-				#set_item_to_done(id)
+				
 				return redirect(url_for('index'))
 			else:
 				return  "not authorised"
@@ -193,7 +187,7 @@ def create_app():
 		@login_required
 		def doing(id):
 			if (LOGIN_DISABLED or 'writer' in current_user.roles):
-				#set_item_to_doing(id)
+				
 				mongo_start(id)
 				return redirect(url_for('index'))        
 			else:
@@ -202,7 +196,7 @@ def create_app():
 		@login_required
 		def delete(id): 
 			if (LOGIN_DISABLED or 'writer' in current_user.roles):
-				#delete_trello_item(id) 
+				
 				mongo_delete(id)
 				app.logger.info('%s %s %s has deleted an entry',current_user.name,current_user.id,request.remote_addr)
 				return redirect(url_for('index')) 
