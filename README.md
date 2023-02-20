@@ -104,7 +104,7 @@ Run "terraform apply"
 
 ## Azure Link
 
-https://test-terratodoappkl.azurewebsites.net
+https://test-terratodoappsa.azurewebsites.net
 
 
 ## Deploying via Kubenties via minikube 
