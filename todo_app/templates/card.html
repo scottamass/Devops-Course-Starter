@@ -22,7 +22,9 @@
           <!-- bottom of card -->
           <div class="flex"  style="justify-content: space-between;  padding-left: 1em;padding-right: 1em;">
             <p>{{item.dateLastActivity[0:10]}}</p>
+            {% if item.due %}
             <p>Due Date: {{item.due}} </p>
+            {% endif %}
             <div class="buttons flex">
               {% if 'writer' in user.roles %}
                 {% if "Doing" in item.list %}  
